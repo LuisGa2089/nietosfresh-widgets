@@ -32,13 +32,15 @@
   .header {
     background: linear-gradient(135deg, var(--green-900), var(--green-700));
     color: var(--white);
-    padding: 24px 32px;
+    padding: 16px 32px;
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
-  .header h1 { font-family: 'Playfair Display', serif; font-size: 24px; }
-  .header p { font-size: 13px; opacity: 0.7; margin-top: 2px; }
+  .header-left { display: flex; align-items: center; gap: 16px; }
+  .header-logo { height: 52px; }
+  .header-text h1 { font-family: 'Playfair Display', serif; font-size: 20px; }
+  .header-text p { font-size: 12px; opacity: 0.7; margin-top: 2px; }
   .header-badge {
     background: rgba(255,255,255,0.15);
     border: 1px solid rgba(255,255,255,0.2);
@@ -160,8 +162,6 @@
   .btn-primary:hover { background: var(--green-900); }
   .btn-secondary { background: var(--neutral-100); color: var(--neutral-700); }
   .btn-secondary:hover { background: var(--neutral-300); }
-  .btn-amber { background: var(--amber-500); color: var(--white); }
-  .btn-amber:hover { background: var(--amber-600); }
 
   /* ── Document Preview ── */
   .doc-preview {
@@ -174,6 +174,7 @@
     margin-left: auto;
     margin-right: auto;
   }
+  .doc-logo { height: 64px; display: block; margin: 0 auto 16px; }
   .doc-preview h2 {
     font-family: 'Playfair Display', serif;
     font-size: 22px;
@@ -251,14 +252,6 @@
     display: flex;
     justify-content: space-between;
   }
-  .doc-signature { margin-top: 48px; }
-  .doc-signature-line {
-    width: 250px;
-    border-top: 1px solid var(--neutral-900);
-    padding-top: 6px;
-    font-size: 12px;
-    color: var(--neutral-500);
-  }
   .doc-status-badge {
     display: inline-block;
     padding: 4px 12px;
@@ -279,6 +272,7 @@
     .panel.print-target { display: block !important; }
     .doc-preview { box-shadow: none; border-radius: 0; padding: 20px; margin: 0; }
     .form-card { display: none; }
+    .doc-logo { height: 72px; }
   }
 
   /* ── Responsive ── */
@@ -286,6 +280,8 @@
     .form-grid { grid-template-columns: 1fr; }
     .doc-header-row { flex-direction: column; gap: 16px; }
     .header { flex-direction: column; gap: 8px; align-items: flex-start; }
+    .tabs { overflow-x: auto; }
+    .tab { padding: 14px 16px; font-size: 13px; white-space: nowrap; }
   }
 
   /* ── Animations ── */
@@ -296,9 +292,12 @@
 <body>
 
 <div class="header">
-  <div>
-    <h1>Nietos Fresh — Document Generator</h1>
-    <p>Generador Semanal de Documentos de Exportación</p>
+  <div class="header-left">
+    <img src="LOS_NIETOS_MARCA-02.png" alt="Los Nietos Fresh Produce" class="header-logo">
+    <div class="header-text">
+      <h1>Document Generator</h1>
+      <p>Generador Semanal de Documentos de Exportación</p>
+    </div>
   </div>
   <div class="header-badge">🌿 Chayote</div>
 </div>
@@ -501,6 +500,8 @@
 </div>
 
 <script>
+const LOGO_URL = 'LOS_NIETOS_MARCA-02.png';
+
 // ── Tab switching ──
 function switchTab(tab) {
   document.querySelectorAll('.tab').forEach((t, i) => {
@@ -518,7 +519,6 @@ function computeFields() {
   const price = parseFloat(document.getElementById('pricePerBox').value) || 0;
   const weight = parseFloat(document.getElementById('weightPerBox').value) || 0;
 
-  // Reference ID: weekNumber + 01 + year
   const now = new Date();
   const year = now.getFullYear();
   const ref = week ? (week.padStart(2,'0') + '01' + year) : '';
@@ -548,6 +548,7 @@ function getFormData() {
 // ── Generate PO ──
 function generatePO(d) {
   return `
+    <img src="${LOGO_URL}" alt="Los Nietos Fresh Produce" class="doc-logo">
     <h2>PURCHASE ORDER</h2>
     <div class="doc-meta">
       <span>DATE: <strong>${d.date}</strong></span>
@@ -588,6 +589,7 @@ function generatePO(d) {
 // ── Generate PI ──
 function generatePI(d) {
   return `
+    <img src="${LOGO_URL}" alt="Los Nietos Fresh Produce" class="doc-logo">
     <div style="text-align:right;margin-bottom:8px;" class="doc-ref">PI-${d.ref}</div>
     <h2>PROFORMA INVOICE</h2>
     <div class="doc-header-row">
@@ -611,18 +613,10 @@ function generatePI(d) {
     </div>
     <div style="text-align:right;font-size:13px;color:var(--neutral-500);margin-bottom:12px;">DATE: ${d.date}</div>
     <table class="doc-table" style="margin-bottom:8px;">
-      <tr>
-        <td class="doc-row-label">VESSEL</td><td>${d.shipping.vessel}</td>
-      </tr>
-      <tr>
-        <td class="doc-row-label">CONTAINER NUMBER</td><td>${d.shipping.container}</td>
-      </tr>
-      <tr>
-        <td class="doc-row-label">SHIPPING LINE</td><td>${d.shipping.line}</td>
-      </tr>
-      <tr>
-        <td class="doc-row-label">SEAL</td><td>${d.shipping.seal}</td>
-      </tr>
+      <tr><td class="doc-row-label">VESSEL</td><td>${d.shipping.vessel}</td></tr>
+      <tr><td class="doc-row-label">CONTAINER NUMBER</td><td>${d.shipping.container}</td></tr>
+      <tr><td class="doc-row-label">SHIPPING LINE</td><td>${d.shipping.line}</td></tr>
+      <tr><td class="doc-row-label">SEAL</td><td>${d.shipping.seal}</td></tr>
     </table>
     <table class="doc-table">
       <tr><th>Quantity</th><th>Description of Goods</th><th style="text-align:right;">US$ Price</th><th style="text-align:right;">Line Total</th></tr>
@@ -652,6 +646,7 @@ function generatePI(d) {
 function generateGGN(d) {
   const statusClass = d.ggn.status.includes('Certified') ? 'status-certified' : 'status-pending';
   return `
+    <img src="${LOGO_URL}" alt="Los Nietos Fresh Produce" class="doc-logo">
     <h2>GGN CHECK — GLOBALG.A.P. Verification</h2>
     <div class="doc-meta">
       <span>Semana: <strong>${d.week}</strong> | Referencia: <strong>${d.ref}</strong></span>
