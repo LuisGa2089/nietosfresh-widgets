@@ -278,8 +278,9 @@ function computeFields(){
 // ── GGN Verify ──
 function verifyGGN(){
   const ggn=document.getElementById('ggnNumber').value;
+  navigator.clipboard.writeText(ggn).catch(()=>{});
   window.open('https://prod.osapiens.cloud/portal/webbundle/foodplus/field-service-os/supply-chain-portal?app-route-hash=%252Fcertificates','_blank');
-  alert('1. Paste GGN: '+ggn+' in the search box\n2. Take a screenshot of the results\n3. Upload it below using the screenshot zone');
+  document.getElementById('screenshotZone').innerHTML='<p>📋 GGN <strong>'+ggn+'</strong> copied to clipboard!</p><p>Paste it in the search box, take a screenshot, then click here to upload it.</p><p class="hint">Or drag & drop the screenshot here</p>';
 }
 
 // ── Screenshot upload ──
