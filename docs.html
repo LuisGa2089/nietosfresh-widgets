@@ -5,289 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nietos Fresh — Document Generator</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=Playfair+Display:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --green-900: #1a3a2a;
-    --green-700: #2d6a4f;
-    --green-500: #40916c;
-    --green-300: #74c69d;
-    --green-100: #d8f3dc;
-    --green-50: #f0faf3;
-    --amber-600: #d97706;
-    --amber-500: #f59e0b;
-    --amber-100: #fef3c7;
-    --red-500: #ef4444;
-    --neutral-900: #1a1a1a;
-    --neutral-700: #404040;
-    --neutral-500: #6b6b6b;
-    --neutral-300: #b3b3b3;
-    --neutral-100: #f0f0f0;
-    --white: #ffffff;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: 'DM Sans', sans-serif; background: var(--neutral-100); color: var(--neutral-900); }
-
-  /* ── Header ── */
-  .header {
-    background: linear-gradient(135deg, var(--green-900), var(--green-700));
-    color: var(--white);
-    padding: 16px 32px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .header-left { display: flex; align-items: center; gap: 16px; }
-  .header-logo { height: 72px; }
-  .header-text h1 { font-family: 'Playfair Display', serif; font-size: 20px; }
-  .header-text p { font-size: 12px; opacity: 0.7; margin-top: 2px; }
-  .header-badge {
-    background: rgba(255,255,255,0.15);
-    border: 1px solid rgba(255,255,255,0.2);
-    border-radius: 20px;
-    padding: 6px 14px;
-    font-size: 12px;
-    font-weight: 600;
-  }
-
-  /* ── Tabs ── */
-  .tabs {
-    display: flex;
-    background: var(--white);
-    border-bottom: 2px solid var(--neutral-100);
-    padding: 0 32px;
-    gap: 0;
-  }
-  .tab {
-    padding: 14px 24px;
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--neutral-500);
-    cursor: pointer;
-    border-bottom: 3px solid transparent;
-    transition: all 0.2s;
-    user-select: none;
-  }
-  .tab:hover { color: var(--green-700); }
-  .tab.active { color: var(--green-700); border-bottom-color: var(--green-500); }
-
-  /* ── Container ── */
-  .container { max-width: 1000px; margin: 24px auto; padding: 0 24px; }
-
-  /* ── Panel ── */
-  .panel { display: none; }
-  .panel.active { display: block; }
-
-  /* ── Form ── */
-  .form-card {
-    background: var(--white);
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    overflow: hidden;
-  }
-  .form-section-title {
-    background: var(--green-900);
-    color: var(--white);
-    padding: 12px 24px;
-    font-size: 13px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-  .form-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    padding: 20px 24px;
-  }
-  .form-group { display: flex; flex-direction: column; gap: 4px; }
-  .form-group.full { grid-column: 1 / -1; }
-  .form-group label {
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--neutral-500);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-  .form-group input, .form-group select, .form-group textarea {
-    padding: 10px 14px;
-    border: 1.5px solid var(--neutral-100);
-    border-radius: 8px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    color: var(--neutral-900);
-    transition: border-color 0.2s;
-    background: var(--white);
-  }
-  .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-    outline: none;
-    border-color: var(--green-500);
-    box-shadow: 0 0 0 3px rgba(64,145,108,0.1);
-  }
-  .form-group .computed {
-    background: var(--green-50);
-    border-color: var(--green-300);
-    font-family: 'JetBrains Mono', monospace;
-    font-weight: 500;
-    color: var(--green-700);
-  }
-  .form-group .hint {
-    font-size: 11px;
-    color: var(--neutral-300);
-    margin-top: 2px;
-  }
-
-  /* ── Buttons ── */
-  .btn-row {
-    display: flex;
-    gap: 12px;
-    padding: 20px 24px;
-    border-top: 1px solid var(--neutral-100);
-    flex-wrap: wrap;
-  }
-  .btn {
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    border: none;
-    transition: all 0.2s;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .btn-primary { background: var(--green-700); color: var(--white); }
-  .btn-primary:hover { background: var(--green-900); }
-  .btn-secondary { background: var(--neutral-100); color: var(--neutral-700); }
-  .btn-secondary:hover { background: var(--neutral-300); }
-
-  /* ── Document Preview ── */
-  .doc-preview {
-    background: var(--white);
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    padding: 40px;
-    margin-top: 20px;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .doc-logo { height: 100px; display: block; margin: 0 auto 16px; }
-  .doc-preview h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 22px;
-    text-align: center;
-    margin-bottom: 24px;
-    color: var(--green-900);
-  }
-  .doc-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 13px;
-    margin: 16px 0;
-  }
-  .doc-table th, .doc-table td {
-    border: 1px solid #ddd;
-    padding: 8px 12px;
-    text-align: left;
-  }
-  .doc-table th {
-    background: var(--green-900);
-    color: var(--white);
-    font-weight: 600;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-  .doc-table td { color: var(--neutral-700); }
-  .doc-row-label { font-weight: 600; color: var(--neutral-900); width: 200px; }
-  .doc-header-row {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-    gap: 40px;
-  }
-  .doc-header-col { flex: 1; }
-  .doc-header-col h3 {
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--green-700);
-    margin-bottom: 8px;
-    border-bottom: 2px solid var(--green-100);
-    padding-bottom: 4px;
-  }
-  .doc-header-col p { font-size: 13px; color: var(--neutral-700); line-height: 1.6; }
-  .doc-meta {
-    display: flex;
-    justify-content: space-between;
-    font-size: 13px;
-    margin-bottom: 16px;
-    color: var(--neutral-500);
-  }
-  .doc-ref {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--green-700);
-  }
-  .doc-total-row td { font-weight: 700; background: var(--green-50); }
-  .doc-note {
-    margin-top: 20px;
-    padding: 12px 16px;
-    background: var(--amber-100);
-    border-radius: 8px;
-    font-size: 12px;
-    color: var(--amber-600);
-    line-height: 1.5;
-  }
-  .doc-footer {
-    margin-top: 32px;
-    padding-top: 16px;
-    border-top: 1px solid var(--neutral-100);
-    font-size: 12px;
-    color: var(--neutral-500);
-    display: flex;
-    justify-content: space-between;
-  }
-  .doc-status-badge {
-    display: inline-block;
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 700;
-  }
-  .status-certified { background: var(--green-100); color: var(--green-700); }
-  .status-pending { background: var(--amber-100); color: var(--amber-600); }
-
-  /* ── Print ── */
-  @media print {
-    body { background: white; }
-    .header, .tabs, .btn-row, .no-print { display: none !important; }
-    .container { max-width: 100%; margin: 0; padding: 0; }
-    .panel { display: block !important; }
-    .panel:not(.print-target) { display: none !important; }
-    .panel.print-target { display: block !important; }
-    .doc-preview { box-shadow: none; border-radius: 0; padding: 20px; margin: 0; }
-    .form-card { display: none; }
-    .doc-logo { height: 72px; }
-  }
-
-  /* ── Responsive ── */
-  @media (max-width: 640px) {
-    .form-grid { grid-template-columns: 1fr; }
-    .doc-header-row { flex-direction: column; gap: 16px; }
-    .header { flex-direction: column; gap: 8px; align-items: flex-start; }
-    .tabs { overflow-x: auto; }
-    .tab { padding: 14px 16px; font-size: 13px; white-space: nowrap; }
-  }
-
-  /* ── Animations ── */
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-  .form-card, .doc-preview { animation: fadeIn 0.3s ease both; }
-</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.2/html2pdf.bundle.min.js"></script>
+<style>:root{--green-900:#1a3a2a;--green-700:#2d6a4f;--green-500:#40916c;--green-300:#74c69d;--green-100:#d8f3dc;--green-50:#f0faf3;--amber-600:#d97706;--amber-500:#f59e0b;--amber-100:#fef3c7;--red-500:#ef4444;--neutral-900:#1a1a1a;--neutral-700:#404040;--neutral-500:#6b6b6b;--neutral-300:#b3b3b3;--neutral-100:#f0f0f0;--white:#fff}*{margin:0;padding:0;box-sizing:border-box}body{font-family:'DM Sans',sans-serif;background:var(--neutral-100);color:var(--neutral-900)}.header{background:linear-gradient(135deg,var(--green-900),var(--green-700));color:var(--white);padding:16px 32px;display:flex;align-items:center;justify-content:space-between}.header-left{display:flex;align-items:center;gap:16px}.header-logo{height:72px}.header-text h1{font-family:'Playfair Display',serif;font-size:20px}.header-text p{font-size:12px;opacity:.7;margin-top:2px}.header-badge{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:6px 14px;font-size:12px;font-weight:600}.tabs{display:flex;background:var(--white);border-bottom:2px solid var(--neutral-100);padding:0 32px;overflow-x:auto}.tab{padding:14px 24px;font-size:14px;font-weight:600;color:var(--neutral-500);cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;user-select:none;white-space:nowrap}.tab:hover{color:var(--green-700)}.tab.active{color:var(--green-700);border-bottom-color:var(--green-500)}.container{max-width:1000px;margin:24px auto;padding:0 24px}.panel{display:none}.panel.active{display:block}.form-card{background:var(--white);border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.06);overflow:hidden}.form-section-title{background:var(--green-900);color:var(--white);padding:12px 24px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:20px 24px}.form-group{display:flex;flex-direction:column;gap:4px}.form-group.full{grid-column:1/-1}.form-group label{font-size:12px;font-weight:600;color:var(--neutral-500);text-transform:uppercase;letter-spacing:.5px}.form-group input,.form-group select{padding:10px 14px;border:1.5px solid var(--neutral-100);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--neutral-900);transition:border-color .2s;background:var(--white)}.form-group input:focus,.form-group select:focus{outline:none;border-color:var(--green-500);box-shadow:0 0 0 3px rgba(64,145,108,.1)}.form-group .computed{background:var(--green-50);border-color:var(--green-300);font-family:'JetBrains Mono',monospace;font-weight:500;color:var(--green-700)}.form-group .hint{font-size:11px;color:var(--neutral-300);margin-top:2px}.custom-client-row{display:none}.custom-client-row.show{display:flex;flex-direction:column;gap:4px}.btn-row{display:flex;gap:12px;padding:20px 24px;border-top:1px solid var(--neutral-100);flex-wrap:wrap}.btn{padding:10px 20px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .2s;display:inline-flex;align-items:center;gap:6px}.btn-primary{background:var(--green-700);color:var(--white)}.btn-primary:hover{background:var(--green-900)}.btn-secondary{background:var(--neutral-100);color:var(--neutral-700)}.btn-secondary:hover{background:var(--neutral-300)}.btn-amber{background:var(--amber-500);color:var(--white)}.btn-amber:hover{background:var(--amber-600)}.btn:disabled{opacity:.5;cursor:not-allowed}.doc-preview{background:var(--white);border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.06);padding:40px;margin-top:20px;max-width:800px;margin-left:auto;margin-right:auto}.doc-logo{height:100px;display:block;margin:0 auto 16px}.doc-preview h2{font-family:'Playfair Display',serif;font-size:22px;text-align:center;margin-bottom:24px;color:var(--green-900)}.doc-table{width:100%;border-collapse:collapse;font-size:13px;margin:16px 0}.doc-table th,.doc-table td{border:1px solid #ddd;padding:8px 12px;text-align:left}.doc-table th{background:var(--green-900);color:var(--white);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.5px}.doc-table td{color:var(--neutral-700)}.doc-row-label{font-weight:600;color:var(--neutral-900);width:200px}.doc-header-row{display:flex;justify-content:space-between;margin-bottom:20px;gap:40px}.doc-header-col{flex:1}.doc-header-col h3{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--green-700);margin-bottom:8px;border-bottom:2px solid var(--green-100);padding-bottom:4px}.doc-header-col p{font-size:13px;color:var(--neutral-700);line-height:1.6}.doc-meta{display:flex;justify-content:space-between;font-size:13px;margin-bottom:16px;color:var(--neutral-500)}.doc-ref{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:600;color:var(--green-700)}.doc-total-row td{font-weight:700;background:var(--green-50)}.doc-note{margin-top:20px;padding:12px 16px;background:var(--amber-100);border-radius:8px;font-size:12px;color:var(--amber-600);line-height:1.5}.doc-footer{margin-top:32px;padding-top:16px;border-top:1px solid var(--neutral-100);font-size:12px;color:var(--neutral-500);display:flex;justify-content:space-between}.doc-status-badge{display:inline-block;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700}.status-certified{background:var(--green-100);color:var(--green-700)}.status-pending{background:var(--amber-100);color:var(--amber-600)}.download-banner{background:var(--green-50);border:2px solid var(--green-300);border-radius:12px;padding:20px 24px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}.download-banner-text h3{font-size:16px;color:var(--green-900);margin-bottom:4px}.download-banner-text p{font-size:13px;color:var(--neutral-500)}.download-banner .filename-list{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--green-700);margin-top:8px;line-height:1.8}.download-all-banner{background:var(--white);border:2px solid var(--green-500);border-radius:12px;padding:24px;margin-bottom:20px}.download-all-banner h3{font-size:16px;color:var(--green-900);margin-bottom:12px}.download-all-list{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--green-700);line-height:2}@media print{body{background:#fff}.header,.tabs,.btn-row,.no-print,.download-banner,.download-all-banner{display:none!important}.container{max-width:100%;margin:0;padding:0}.panel{display:block!important}.panel:not(.print-target){display:none!important}.panel.print-target{display:block!important}.doc-preview{box-shadow:none;border-radius:0;padding:20px;margin:0}.form-card{display:none}.doc-logo{height:100px}}@media(max-width:640px){.form-grid{grid-template-columns:1fr}.doc-header-row{flex-direction:column;gap:16px}.header{flex-direction:column;gap:8px;align-items:flex-start}.download-banner{flex-direction:column;align-items:flex-start}}@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}.form-card,.doc-preview,.download-banner{animation:fadeIn .3s ease both}</style>
 </head>
 <body>
 
@@ -314,6 +33,43 @@
   <!-- ═══ INPUT FORM ═══ -->
   <div class="panel active" id="panel-input">
     <div class="form-card">
+
+      <div class="form-section-title">Cliente / Client</div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Seleccionar Cliente</label>
+          <select id="clientSelect" onchange="onClientChange()">
+            <option value="gakeal">El Gakeal S.A.</option>
+            <option value="custom">+ Add New Client</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Nombre Corto (para archivos)</label>
+          <input type="text" id="clientShortName" value="Gakeal" oninput="computeFields()">
+          <span class="hint">Se usa en el nombre del PDF</span>
+        </div>
+        <div class="form-group custom-client-row" id="ccName">
+          <label>Nombre Completo del Nuevo Cliente</label>
+          <input type="text" id="customClientName" placeholder="Ej: Frutas del Valle S.A.">
+        </div>
+        <div class="form-group custom-client-row" id="ccId">
+          <label>Cédula Jurídica</label>
+          <input type="text" id="customClientId" placeholder="Ej: 3-101-000000">
+        </div>
+        <div class="form-group custom-client-row" id="ccAddr">
+          <label>Dirección</label>
+          <input type="text" id="customClientAddress" placeholder="Dirección del cliente">
+        </div>
+        <div class="form-group custom-client-row" id="ccContact">
+          <label>Contacto</label>
+          <input type="text" id="customClientContact" placeholder="Nombre del contacto">
+        </div>
+        <div class="form-group custom-client-row" id="ccEmail">
+          <label>Email</label>
+          <input type="text" id="customClientEmail" placeholder="email@client.com">
+        </div>
+      </div>
+
       <div class="form-section-title">Datos de la Orden (llenar cada semana)</div>
       <div class="form-grid">
         <div class="form-group">
@@ -327,7 +83,7 @@
         <div class="form-group">
           <label>Referencia / Record ID</label>
           <input type="text" id="refId" class="computed" readonly>
-          <span class="hint">Se calcula automáticamente (semana + 01 + año)</span>
+          <span class="hint">Se calcula automáticamente</span>
         </div>
         <div class="form-group">
           <label>Cantidad de Cajas</label>
@@ -353,146 +109,102 @@
 
       <div class="form-section-title">Datos del Proveedor / Supplier</div>
       <div class="form-grid">
-        <div class="form-group">
-          <label>Nombre del Proveedor</label>
-          <input type="text" id="supplierName" value="José Rafael Meza">
-        </div>
-        <div class="form-group">
-          <label>Dirección</label>
-          <input type="text" id="supplierAddress" value="Ujarrás, Cartago">
-        </div>
-        <div class="form-group">
-          <label>GGN</label>
-          <input type="text" id="supplierGgn" value="4063651018462">
-        </div>
-        <div class="form-group">
-          <label>Teléfono</label>
-          <input type="text" id="supplierPhone" value="506 2574-3247 | +506 8880-6461">
-        </div>
-        <div class="form-group">
-          <label>Email</label>
-          <input type="text" id="supplierEmail" value="facturacion@jrnewfruits.com">
-        </div>
-      </div>
-
-      <div class="form-section-title">Datos del Cliente / Customer (Proforma Invoice)</div>
-      <div class="form-grid">
-        <div class="form-group">
-          <label>Nombre del Cliente</label>
-          <input type="text" id="customerName" value="El Gakeal S.A.">
-        </div>
-        <div class="form-group">
-          <label>Cédula Jurídica</label>
-          <input type="text" id="customerId" value="3-101543539">
-        </div>
-        <div class="form-group">
-          <label>Dirección</label>
-          <input type="text" id="customerAddress" value="1.5 km norte del BNCR en Pital, San Carlos">
-        </div>
-        <div class="form-group">
-          <label>Contacto</label>
-          <input type="text" id="customerContact" value="Xiomara Galarza">
-        </div>
-        <div class="form-group">
-          <label>Email</label>
-          <input type="text" id="customerEmail" value="facturaelectronicaelgakeal@visasa.com">
-        </div>
+        <div class="form-group"><label>Nombre</label><input type="text" id="supplierName" value="José Rafael Meza"></div>
+        <div class="form-group"><label>Dirección</label><input type="text" id="supplierAddress" value="Ujarrás, Cartago"></div>
+        <div class="form-group"><label>GGN</label><input type="text" id="supplierGgn" value="4063651018462"></div>
+        <div class="form-group"><label>Teléfono</label><input type="text" id="supplierPhone" value="506 2574-3247 | +506 8880-6461"></div>
+        <div class="form-group"><label>Email</label><input type="text" id="supplierEmail" value="facturacion@jrnewfruits.com"></div>
       </div>
 
       <div class="form-section-title">Datos de Envío (Proforma Invoice)</div>
       <div class="form-grid">
-        <div class="form-group">
-          <label>Vessel</label>
-          <input type="text" id="vessel" placeholder="Nombre del barco (o -)">
-        </div>
-        <div class="form-group">
-          <label>Container Number</label>
-          <input type="text" id="containerNum" placeholder="Número de contenedor (o -)">
-        </div>
-        <div class="form-group">
-          <label>Shipping Line</label>
-          <input type="text" id="shippingLine" placeholder="Naviera (o -)">
-        </div>
-        <div class="form-group">
-          <label>Seal</label>
-          <input type="text" id="seal" placeholder="Marchamo (o -)">
-        </div>
+        <div class="form-group"><label>Vessel</label><input type="text" id="vessel" placeholder="Nombre del barco (o -)"></div>
+        <div class="form-group"><label>Container Number</label><input type="text" id="containerNum" placeholder="Número de contenedor (o -)"></div>
+        <div class="form-group"><label>Shipping Line</label><input type="text" id="shippingLine" placeholder="Naviera (o -)"></div>
+        <div class="form-group"><label>Seal</label><input type="text" id="seal" placeholder="Marchamo (o -)"></div>
       </div>
 
       <div class="form-section-title">GGN — Datos GLOBALG.A.P.</div>
       <div class="form-grid">
-        <div class="form-group">
-          <label>GGN Number</label>
-          <input type="text" id="ggnNumber" value="4063651018462">
-        </div>
-        <div class="form-group">
-          <label>Reg. No</label>
-          <input type="text" id="ggnRegNo" value="PL-Chile 17431">
-        </div>
-        <div class="form-group">
-          <label>Nombre Productor</label>
-          <input type="text" id="ggnProducerName" value="Jose Rafael Meza Moya">
-        </div>
-        <div class="form-group">
-          <label>Company Type</label>
-          <input type="text" id="ggnCompanyType" value="Producer">
-        </div>
-        <div class="form-group">
-          <label>Certification Body</label>
-          <input type="text" id="ggnCertBody" value="Primus Auditing Ops">
-        </div>
-        <div class="form-group">
-          <label>Certificate No.</label>
-          <input type="text" id="ggnCertNo" value="00142-HKVTF-0003">
-        </div>
+        <div class="form-group"><label>GGN Number</label><input type="text" id="ggnNumber" value="4063651018462"></div>
+        <div class="form-group"><label>Reg. No</label><input type="text" id="ggnRegNo" value="PL-Chile 17431"></div>
+        <div class="form-group"><label>Nombre Productor</label><input type="text" id="ggnProducerName" value="Jose Rafael Meza Moya"></div>
+        <div class="form-group"><label>Company Type</label><input type="text" id="ggnCompanyType" value="Producer"></div>
+        <div class="form-group"><label>Certification Body</label><input type="text" id="ggnCertBody" value="Primus Auditing Ops"></div>
+        <div class="form-group"><label>Certificate No.</label><input type="text" id="ggnCertNo" value="00142-HKVTF-0003"></div>
         <div class="form-group">
           <label>Status</label>
-          <select id="ggnStatus">
-            <option value="Certified ✓" selected>Certified ✓</option>
-            <option value="Pending">Pending</option>
-            <option value="Expired">Expired</option>
-          </select>
+          <select id="ggnStatus"><option value="Certified ✓" selected>Certified ✓</option><option value="Pending">Pending</option><option value="Expired">Expired</option></select>
         </div>
-        <div class="form-group">
-          <label>Valid To</label>
-          <input type="text" id="ggnValidTo" value="19/01/2027">
-        </div>
-        <div class="form-group full">
-          <label>Scheme GR</label>
-          <input type="text" id="ggnScheme" value="GLOBALG.A.P. GR version 5.4-1 GFS">
-        </div>
+        <div class="form-group"><label>Valid To</label><input type="text" id="ggnValidTo" value="19/01/2027"></div>
+        <div class="form-group full"><label>Scheme GR</label><input type="text" id="ggnScheme" value="GLOBALG.A.P. GR version 5.4-1 GFS"></div>
       </div>
 
       <div class="btn-row">
         <button class="btn btn-primary" onclick="generateAll()">🚀 Generate All Documents</button>
+        <button class="btn btn-amber" id="btnDownloadAll" onclick="downloadAllPDFs()" style="display:none;">📦 Download All PDFs</button>
         <button class="btn btn-secondary" onclick="clearForm()">🗑️ Clear Form</button>
+      </div>
+    </div>
+
+    <!-- file list after generation -->
+    <div class="download-all-banner" id="fileListBanner" style="display:none;margin-top:20px;">
+      <h3>📦 Generated Documents</h3>
+      <div class="download-all-list" id="fileListContent"></div>
+      <div style="margin-top:16px;display:flex;gap:12px;flex-wrap:wrap;">
+        <button class="btn btn-amber" onclick="downloadAllPDFs()">⬇️ Download All PDFs</button>
+        <button class="btn btn-primary" onclick="switchTab('po')">Preview Documents →</button>
       </div>
     </div>
   </div>
 
   <!-- ═══ PURCHASE ORDER ═══ -->
   <div class="panel" id="panel-po">
-    <div class="btn-row no-print" style="padding: 0 0 12px; border: none;">
-      <button class="btn btn-primary" onclick="printDoc('po')">🖨️ Print / Save PDF</button>
-      <button class="btn btn-secondary" onclick="switchTab('input')">← Back to Form</button>
+    <div class="download-banner no-print">
+      <div class="download-banner-text">
+        <h3>📋 Purchase Order</h3>
+        <div class="filename-list" id="po-filename"></div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="btn btn-primary" onclick="downloadPDF('po')">⬇️ Download PDF</button>
+        <button class="btn btn-secondary" onclick="printDoc('po')">🖨️ Print</button>
+        <button class="btn btn-secondary" onclick="switchTab('pi')">Next: Invoice →</button>
+        <button class="btn btn-secondary" onclick="switchTab('input')">← Back</button>
+      </div>
     </div>
     <div class="doc-preview" id="doc-po"></div>
   </div>
 
   <!-- ═══ PROFORMA INVOICE ═══ -->
   <div class="panel" id="panel-pi">
-    <div class="btn-row no-print" style="padding: 0 0 12px; border: none;">
-      <button class="btn btn-primary" onclick="printDoc('pi')">🖨️ Print / Save PDF</button>
-      <button class="btn btn-secondary" onclick="switchTab('input')">← Back to Form</button>
+    <div class="download-banner no-print">
+      <div class="download-banner-text">
+        <h3>💰 Proforma Invoice</h3>
+        <div class="filename-list" id="pi-filename"></div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="btn btn-primary" onclick="downloadPDF('pi')">⬇️ Download PDF</button>
+        <button class="btn btn-secondary" onclick="printDoc('pi')">🖨️ Print</button>
+        <button class="btn btn-secondary" onclick="switchTab('ggn')">Next: GGN →</button>
+        <button class="btn btn-secondary" onclick="switchTab('input')">← Back</button>
+      </div>
     </div>
     <div class="doc-preview" id="doc-pi"></div>
   </div>
 
   <!-- ═══ GGN CHECK ═══ -->
   <div class="panel" id="panel-ggn">
-    <div class="btn-row no-print" style="padding: 0 0 12px; border: none;">
-      <button class="btn btn-primary" onclick="printDoc('ggn')">🖨️ Print / Save PDF</button>
-      <button class="btn btn-secondary" onclick="switchTab('input')">← Back to Form</button>
+    <div class="download-banner no-print">
+      <div class="download-banner-text">
+        <h3>✅ GGN Check</h3>
+        <div class="filename-list" id="ggn-filename"></div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="btn btn-primary" onclick="downloadPDF('ggn')">⬇️ Download PDF</button>
+        <button class="btn btn-secondary" onclick="printDoc('ggn')">🖨️ Print</button>
+        <button class="btn btn-amber" onclick="downloadAllPDFs()">📦 Download All</button>
+        <button class="btn btn-secondary" onclick="switchTab('input')">← Back</button>
+      </div>
     </div>
     <div class="doc-preview" id="doc-ggn"></div>
   </div>
@@ -500,226 +212,116 @@
 </div>
 
 <script>
-const LOGO_URL = 'LOS%20NIETOS%20MARCA-02.png';
+const LOGO_URL='LOS%20NIETOS%20MARCA-02.png';
+const CLIENTS={gakeal:{name:'El Gakeal S.A.',id:'3-101543539',address:'1.5 km norte del BNCR en Pital, San Carlos',contact:'Xiomara Galarza',email:'facturaelectronicaelgakeal@visasa.com',shortName:'Gakeal'}};
 
-// ── Tab switching ──
-function switchTab(tab) {
-  document.querySelectorAll('.tab').forEach((t, i) => {
-    const tabs = ['input','po','pi','ggn'];
-    t.classList.toggle('active', tabs[i] === tab);
-  });
-  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active','print-target'));
-  document.getElementById('panel-' + tab).classList.add('active');
+function onClientChange(){
+  const sel=document.getElementById('clientSelect').value;
+  document.querySelectorAll('.custom-client-row').forEach(r=>{sel==='custom'?r.classList.add('show'):r.classList.remove('show')});
+  if(sel!=='custom'){const c=CLIENTS[sel];document.getElementById('clientShortName').value=c.shortName;}else{document.getElementById('clientShortName').value='';}
+  computeFields();
 }
-
-// ── Compute auto fields ──
-function computeFields() {
-  const week = document.getElementById('weekNum').value;
-  const boxes = parseFloat(document.getElementById('boxCount').value) || 0;
-  const price = parseFloat(document.getElementById('pricePerBox').value) || 0;
-  const weight = parseFloat(document.getElementById('weightPerBox').value) || 0;
-
-  const now = new Date();
-  const year = now.getFullYear();
-  const ref = week ? (week.padStart(2,'0') + '01' + year) : '';
-  document.getElementById('refId').value = ref;
-
-  document.getElementById('totalKg').value = (boxes * weight).toFixed(0) + ' kg';
-  document.getElementById('totalUsd').value = '$' + (boxes * price).toFixed(2);
+function getClientData(){
+  const sel=document.getElementById('clientSelect').value;
+  if(sel==='custom')return{name:document.getElementById('customClientName').value||'-',id:document.getElementById('customClientId').value||'-',address:document.getElementById('customClientAddress').value||'-',contact:document.getElementById('customClientContact').value||'-',email:document.getElementById('customClientEmail').value||'-'};
+  return CLIENTS[sel];
 }
-
-// ── Get form values ──
-function getFormData() {
-  const v = id => document.getElementById(id).value || '-';
-  const boxes = parseFloat(v('boxCount')) || 0;
-  const price = parseFloat(v('pricePerBox')) || 0;
-  const weight = parseFloat(v('weightPerBox')) || 0;
-  return {
-    week: v('weekNum'), date: v('orderDate'), ref: v('refId'),
-    boxes, price, weight,
-    totalKg: (boxes * weight), totalUsd: (boxes * price),
-    supplier: { name: v('supplierName'), address: v('supplierAddress'), ggn: v('supplierGgn'), phone: v('supplierPhone'), email: v('supplierEmail') },
-    customer: { name: v('customerName'), id: v('customerId'), address: v('customerAddress'), contact: v('customerContact'), email: v('customerEmail') },
-    shipping: { vessel: v('vessel'), container: v('containerNum'), line: v('shippingLine'), seal: v('seal') },
-    ggn: { number: v('ggnNumber'), regNo: v('ggnRegNo'), producer: v('ggnProducerName'), companyType: v('ggnCompanyType'), certBody: v('ggnCertBody'), certNo: v('ggnCertNo'), status: v('ggnStatus'), validTo: v('ggnValidTo'), scheme: v('ggnScheme') }
+function switchTab(tab){
+  document.querySelectorAll('.tab').forEach((t,i)=>{const tabs=['input','po','pi','ggn'];t.classList.toggle('active',tabs[i]===tab);});
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active','print-target'));
+  const el=document.getElementById('panel-'+tab);if(el)el.classList.add('active');
+}
+function computeFields(){
+  const week=document.getElementById('weekNum').value;
+  const boxes=parseFloat(document.getElementById('boxCount').value)||0;
+  const price=parseFloat(document.getElementById('pricePerBox').value)||0;
+  const weight=parseFloat(document.getElementById('weightPerBox').value)||0;
+  const year=new Date().getFullYear();
+  const ref=week?(week.padStart(2,'0')+'01'+year):'';
+  document.getElementById('refId').value=ref;
+  document.getElementById('totalKg').value=(boxes*weight).toFixed(0)+' kg';
+  document.getElementById('totalUsd').value='$'+(boxes*price).toFixed(2);
+}
+function getFormData(){
+  const v=id=>document.getElementById(id).value||'-';
+  const boxes=parseFloat(v('boxCount'))||0,price=parseFloat(v('pricePerBox'))||0,weight=parseFloat(v('weightPerBox'))||0;
+  const client=getClientData(),shortName=v('clientShortName'),week=v('weekNum'),ref=v('refId');
+  const wk=week?('WK'+week.padStart(2,'0')):'WK00';
+  return{week,date:v('orderDate'),ref,wk,shortName,boxes,price,weight,totalKg:boxes*weight,totalUsd:boxes*price,
+    supplier:{name:v('supplierName'),address:v('supplierAddress'),ggn:v('supplierGgn'),phone:v('supplierPhone'),email:v('supplierEmail')},
+    customer:client,
+    shipping:{vessel:v('vessel'),container:v('containerNum'),line:v('shippingLine'),seal:v('seal')},
+    ggn:{number:v('ggnNumber'),regNo:v('ggnRegNo'),producer:v('ggnProducerName'),companyType:v('ggnCompanyType'),certBody:v('ggnCertBody'),certNo:v('ggnCertNo'),status:v('ggnStatus'),validTo:v('ggnValidTo'),scheme:v('ggnScheme')},
+    filenames:{
+      po:'02 - Purchase Order - '+shortName+' PO-'+ref+' '+wk,
+      pi:'04 - Proforma Invoice - '+shortName+' PI-'+ref+' '+wk,
+      ggn:'09 - GGN Check - '+ref
+    }
   };
 }
 
-// ── Generate PO ──
-function generatePO(d) {
-  return `
-    <img src="${LOGO_URL}" alt="Los Nietos Fresh Produce" class="doc-logo">
-    <h2>PURCHASE ORDER</h2>
-    <div class="doc-meta">
-      <span>DATE: <strong>${d.date}</strong></span>
-      <span>Week: <strong>${d.week}</strong></span>
-    </div>
-    <div class="doc-header-row">
-      <div class="doc-header-col">
-        <h3>Buyer</h3>
-        <p><strong>3-102-734221 SRL</strong><br>
-        San Jose, Desamparados, Costa Rica<br>
-        Phone: +506 8828-6345 | +506 7024-8218<br>
-        Email: sales@nietosfresh.com</p>
-      </div>
-      <div class="doc-header-col">
-        <h3>Supplier</h3>
-        <p><strong>${d.supplier.name}</strong><br>
-        ${d.supplier.address}<br>
-        GGN: ${d.supplier.ggn}<br>
-        Phone: ${d.supplier.phone}<br>
-        Email: ${d.supplier.email}</p>
-      </div>
-    </div>
-    <table class="doc-table">
-      <tr><th>Quantity</th><th>Description of Goods</th></tr>
-      <tr><td>${d.boxes}</td><td>Cajas de Chayote verde exportación a ${d.weight} kg</td></tr>
-    </table>
-    <div class="doc-note">
-      <strong>Nota:</strong> Producto debe ser certificado GLOBALG.A.P.<br>
-      GGN debe aparecer en los documentos de entrega y factura.
-    </div>
-    <div class="doc-footer">
-      <span><strong>3-102-734221 SRL</strong></span>
-      <span class="doc-ref">PO-${d.ref}</span>
-    </div>
-  `;
-}
+function generatePO(d){return`<img src="${LOGO_URL}" alt="Logo" class="doc-logo"><h2>PURCHASE ORDER</h2><div class="doc-meta"><span>DATE: <strong>${d.date}</strong></span><span>Week: <strong>${d.week}</strong></span></div><div class="doc-header-row"><div class="doc-header-col"><h3>Buyer</h3><p><strong>3-102-734221 SRL</strong><br>San Jose, Desamparados, Costa Rica<br>Phone: +506 8828-6345 | +506 7024-8218<br>Email: sales@nietosfresh.com</p></div><div class="doc-header-col"><h3>Supplier</h3><p><strong>${d.supplier.name}</strong><br>${d.supplier.address}<br>GGN: ${d.supplier.ggn}<br>Phone: ${d.supplier.phone}<br>Email: ${d.supplier.email}</p></div></div><table class="doc-table"><tr><th>Quantity</th><th>Description of Goods</th></tr><tr><td>${d.boxes}</td><td>Cajas de Chayote verde exportación a ${d.weight} kg</td></tr></table><div class="doc-note"><strong>Nota:</strong> Producto debe ser certificado GLOBALG.A.P.<br>GGN debe aparecer en los documentos de entrega y factura.</div><div class="doc-footer"><span><strong>3-102-734221 SRL</strong></span><span class="doc-ref">PO-${d.ref}</span></div>`;}
 
-// ── Generate PI ──
-function generatePI(d) {
-  return `
-    <img src="${LOGO_URL}" alt="Los Nietos Fresh Produce" class="doc-logo">
-    <div style="text-align:right;margin-bottom:8px;" class="doc-ref">PI-${d.ref}</div>
-    <h2>PROFORMA INVOICE</h2>
-    <div class="doc-header-row">
-      <div class="doc-header-col">
-        <h3>Exporter / Shipper</h3>
-        <p><strong>3-102-734221 SRL</strong><br>
-        San Jose, Desamparados, Costa Rica<br>
-        Exporter Code: MAG 3734<br>
-        Tax ID: 3-102-734221<br>
-        Phone: 506 8828-6345 | +506 7024-8218<br>
-        Email: sales@nietosfresh.com</p>
-      </div>
-      <div class="doc-header-col">
-        <h3>Customer</h3>
-        <p><strong>${d.customer.name}</strong><br>
-        ${d.customer.id}<br>
-        ${d.customer.address}<br>
-        ${d.customer.contact}<br>
-        ${d.customer.email}</p>
-      </div>
-    </div>
-    <div style="text-align:right;font-size:13px;color:var(--neutral-500);margin-bottom:12px;">DATE: ${d.date}</div>
-    <table class="doc-table" style="margin-bottom:8px;">
-      <tr><td class="doc-row-label">VESSEL</td><td>${d.shipping.vessel}</td></tr>
-      <tr><td class="doc-row-label">CONTAINER NUMBER</td><td>${d.shipping.container}</td></tr>
-      <tr><td class="doc-row-label">SHIPPING LINE</td><td>${d.shipping.line}</td></tr>
-      <tr><td class="doc-row-label">SEAL</td><td>${d.shipping.seal}</td></tr>
-    </table>
-    <table class="doc-table">
-      <tr><th>Quantity</th><th>Description of Goods</th><th style="text-align:right;">US$ Price</th><th style="text-align:right;">Line Total</th></tr>
-      <tr>
-        <td>${d.boxes}</td>
-        <td>Cajas de Chayote verde exportación a ${d.weight} kg</td>
-        <td style="text-align:right;">${d.price.toFixed(2)}</td>
-        <td style="text-align:right;">${d.totalUsd.toFixed(2)}</td>
-      </tr>
-      <tr class="doc-total-row">
-        <td colspan="3" style="text-align:right;">SUBTOTAL</td>
-        <td style="text-align:right;">${d.totalUsd.toFixed(2)}</td>
-      </tr>
-      <tr class="doc-total-row">
-        <td colspan="3" style="text-align:right;"><strong>TOTAL USD</strong></td>
-        <td style="text-align:right;"><strong>$${d.totalUsd.toFixed(2)}</strong></td>
-      </tr>
-    </table>
-    <div class="doc-footer">
-      <span><strong>3-102-734221 SRL</strong></span>
-      <span>Los Nietos Fresh Produce</span>
-    </div>
-  `;
-}
+function generatePI(d){return`<img src="${LOGO_URL}" alt="Logo" class="doc-logo"><div style="text-align:right;margin-bottom:8px" class="doc-ref">PI-${d.ref}</div><h2>PROFORMA INVOICE</h2><div class="doc-header-row"><div class="doc-header-col"><h3>Exporter / Shipper</h3><p><strong>3-102-734221 SRL</strong><br>San Jose, Desamparados, Costa Rica<br>Exporter Code: MAG 3734<br>Tax ID: 3-102-734221<br>Phone: 506 8828-6345 | +506 7024-8218<br>Email: sales@nietosfresh.com</p></div><div class="doc-header-col"><h3>Customer</h3><p><strong>${d.customer.name}</strong><br>${d.customer.id}<br>${d.customer.address}<br>${d.customer.contact}<br>${d.customer.email}</p></div></div><div style="text-align:right;font-size:13px;color:var(--neutral-500);margin-bottom:12px">DATE: ${d.date}</div><table class="doc-table" style="margin-bottom:8px"><tr><td class="doc-row-label">VESSEL</td><td>${d.shipping.vessel}</td></tr><tr><td class="doc-row-label">CONTAINER NUMBER</td><td>${d.shipping.container}</td></tr><tr><td class="doc-row-label">SHIPPING LINE</td><td>${d.shipping.line}</td></tr><tr><td class="doc-row-label">SEAL</td><td>${d.shipping.seal}</td></tr></table><table class="doc-table"><tr><th>Quantity</th><th>Description of Goods</th><th style="text-align:right">US$ Price</th><th style="text-align:right">Line Total</th></tr><tr><td>${d.boxes}</td><td>Cajas de Chayote verde exportación a ${d.weight} kg</td><td style="text-align:right">${d.price.toFixed(2)}</td><td style="text-align:right">${d.totalUsd.toFixed(2)}</td></tr><tr class="doc-total-row"><td colspan="3" style="text-align:right">SUBTOTAL</td><td style="text-align:right">${d.totalUsd.toFixed(2)}</td></tr><tr class="doc-total-row"><td colspan="3" style="text-align:right"><strong>TOTAL USD</strong></td><td style="text-align:right"><strong>$${d.totalUsd.toFixed(2)}</strong></td></tr></table><div class="doc-footer"><span><strong>3-102-734221 SRL</strong></span><span>Los Nietos Fresh Produce</span></div>`;}
 
-// ── Generate GGN ──
-function generateGGN(d) {
-  const statusClass = d.ggn.status.includes('Certified') ? 'status-certified' : 'status-pending';
-  return `
-    <img src="${LOGO_URL}" alt="Los Nietos Fresh Produce" class="doc-logo">
-    <h2>GGN CHECK — GLOBALG.A.P. Verification</h2>
-    <div class="doc-meta">
-      <span>Semana: <strong>${d.week}</strong> | Referencia: <strong>${d.ref}</strong></span>
-    </div>
-    <table class="doc-table">
-      <tr><th colspan="2">Información del Productor</th></tr>
-      <tr><td class="doc-row-label">GGN</td><td>${d.ggn.number}</td></tr>
-      <tr><td class="doc-row-label">Reg. No</td><td>${d.ggn.regNo}</td></tr>
-      <tr><td class="doc-row-label">Company Type</td><td>${d.ggn.companyType}</td></tr>
-      <tr><td class="doc-row-label">Nombre</td><td>${d.ggn.producer}</td></tr>
-      <tr><td class="doc-row-label">Certification Body</td><td>${d.ggn.certBody}</td></tr>
-      <tr><td class="doc-row-label">Scheme</td><td>GLOBALG.A.P.</td></tr>
-    </table>
-    <table class="doc-table">
-      <tr><th colspan="2">Detalles de Certificación</th></tr>
-      <tr><td class="doc-row-label">Producto</td><td>Chayote</td></tr>
-      <tr><td class="doc-row-label">Certificate No.</td><td>${d.ggn.certNo}</td></tr>
-      <tr><td class="doc-row-label">Cycle</td><td>Current</td></tr>
-      <tr><td class="doc-row-label">Status</td><td><span class="doc-status-badge ${statusClass}">${d.ggn.status}</span></td></tr>
-      <tr><td class="doc-row-label">Valid To</td><td>${d.ggn.validTo}</td></tr>
-      <tr><td class="doc-row-label">Scheme GR</td><td>${d.ggn.scheme}</td></tr>
-    </table>
-    <table class="doc-table">
-      <tr><th colspan="2">Atributos del Ciclo Actual</th></tr>
-      <tr><td class="doc-row-label">GRASP status</td><td>see GRASP v1.3.1-i</td></tr>
-      <tr><td class="doc-row-label">Product Handling</td><td>Facility</td></tr>
-      <tr><td class="doc-row-label">Harvest Included</td><td>Included</td></tr>
-      <tr><td class="doc-row-label">Audit Type</td><td>announced</td></tr>
-      <tr><td class="doc-row-label">Parallel Production (PP)?</td><td>No</td></tr>
-      <tr><td class="doc-row-label">Unannounced reward program</td><td>No, annual announced inspection</td></tr>
-      <tr><td class="doc-row-label">Parallel Ownership (PO)?</td><td>No</td></tr>
-      <tr><td class="doc-row-label">Audit Method</td><td>Onsite</td></tr>
-    </table>
-    <div class="doc-footer">
-      <span>Fuente: <a href="https://database.globalgap.org" target="_blank">database.globalgap.org</a></span>
-      <span>Verificado para semana ${d.week} — ${d.date}</span>
-    </div>
-  `;
-}
+function generateGGN(d){const sc=d.ggn.status.includes('Certified')?'status-certified':'status-pending';return`<img src="${LOGO_URL}" alt="Logo" class="doc-logo"><h2>GGN CHECK — GLOBALG.A.P. Verification</h2><div class="doc-meta"><span>Semana: <strong>${d.week}</strong> | Referencia: <strong>${d.ref}</strong></span></div><table class="doc-table"><tr><th colspan="2">Información del Productor</th></tr><tr><td class="doc-row-label">GGN</td><td>${d.ggn.number}</td></tr><tr><td class="doc-row-label">Reg. No</td><td>${d.ggn.regNo}</td></tr><tr><td class="doc-row-label">Company Type</td><td>${d.ggn.companyType}</td></tr><tr><td class="doc-row-label">Nombre</td><td>${d.ggn.producer}</td></tr><tr><td class="doc-row-label">Certification Body</td><td>${d.ggn.certBody}</td></tr><tr><td class="doc-row-label">Scheme</td><td>GLOBALG.A.P.</td></tr></table><table class="doc-table"><tr><th colspan="2">Detalles de Certificación</th></tr><tr><td class="doc-row-label">Producto</td><td>Chayote</td></tr><tr><td class="doc-row-label">Certificate No.</td><td>${d.ggn.certNo}</td></tr><tr><td class="doc-row-label">Cycle</td><td>Current</td></tr><tr><td class="doc-row-label">Status</td><td><span class="doc-status-badge ${sc}">${d.ggn.status}</span></td></tr><tr><td class="doc-row-label">Valid To</td><td>${d.ggn.validTo}</td></tr><tr><td class="doc-row-label">Scheme GR</td><td>${d.ggn.scheme}</td></tr></table><table class="doc-table"><tr><th colspan="2">Atributos del Ciclo Actual</th></tr><tr><td class="doc-row-label">GRASP status</td><td>see GRASP v1.3.1-i</td></tr><tr><td class="doc-row-label">Product Handling</td><td>Facility</td></tr><tr><td class="doc-row-label">Harvest Included</td><td>Included</td></tr><tr><td class="doc-row-label">Audit Type</td><td>announced</td></tr><tr><td class="doc-row-label">Parallel Production (PP)?</td><td>No</td></tr><tr><td class="doc-row-label">Unannounced reward program</td><td>No, annual announced inspection</td></tr><tr><td class="doc-row-label">Parallel Ownership (PO)?</td><td>No</td></tr><tr><td class="doc-row-label">Audit Method</td><td>Onsite</td></tr></table><div class="doc-footer"><span>Fuente: <a href="https://database.globalgap.org" target="_blank">database.globalgap.org</a></span><span>Verificado para semana ${d.week} — ${d.date}</span></div>`;}
 
-// ── Generate All ──
-function generateAll() {
-  const d = getFormData();
-  if (!d.ref || d.ref === '-') {
-    alert('Please enter the week number first.');
-    return;
-  }
-  document.getElementById('doc-po').innerHTML = generatePO(d);
-  document.getElementById('doc-pi').innerHTML = generatePI(d);
-  document.getElementById('doc-ggn').innerHTML = generateGGN(d);
+let currentData=null;
+
+function generateAll(){
+  const d=getFormData();
+  if(!d.ref||d.ref==='-'){alert('Please enter the week number first.');return;}
+  currentData=d;
+  document.getElementById('doc-po').innerHTML=generatePO(d);
+  document.getElementById('doc-pi').innerHTML=generatePI(d);
+  document.getElementById('doc-ggn').innerHTML=generateGGN(d);
+  document.getElementById('po-filename').textContent='📄 '+d.filenames.po+'.pdf';
+  document.getElementById('pi-filename').textContent='📄 '+d.filenames.pi+'.pdf';
+  document.getElementById('ggn-filename').textContent='📄 '+d.filenames.ggn+'.pdf';
+  // show file list and download all button
+  document.getElementById('btnDownloadAll').style.display='';
+  const banner=document.getElementById('fileListBanner');
+  banner.style.display='block';
+  document.getElementById('fileListContent').innerHTML=
+    '📄 '+d.filenames.po+'.pdf<br>'+
+    '📄 '+d.filenames.pi+'.pdf<br>'+
+    '📄 '+d.filenames.ggn+'.pdf';
   switchTab('po');
 }
 
-// ── Print specific doc ──
-function printDoc(type) {
-  document.querySelectorAll('.panel').forEach(p => p.classList.remove('print-target'));
-  document.getElementById('panel-' + type).classList.add('print-target');
+const PDF_OPTS={margin:[10,10,10,10],image:{type:'jpeg',quality:0.98},html2canvas:{scale:2,useCORS:true,logging:false},jsPDF:{unit:'mm',format:'letter',orientation:'portrait'}};
+
+async function downloadPDF(type){
+  if(!currentData){alert('Generate documents first.');return;}
+  const el=document.getElementById('doc-'+type);
+  await html2pdf().set({...PDF_OPTS,filename:currentData.filenames[type]+'.pdf'}).from(el).save();
+}
+
+async function downloadAllPDFs(){
+  if(!currentData){alert('Generate documents first.');return;}
+  const types=['po','pi','ggn'];
+  for(let i=0;i<types.length;i++){
+    const t=types[i];
+    const el=document.getElementById('doc-'+t);
+    await html2pdf().set({...PDF_OPTS,filename:currentData.filenames[t]+'.pdf'}).from(el).save();
+    await new Promise(r=>setTimeout(r,800)); // brief delay between downloads
+  }
+}
+
+function printDoc(type){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('print-target'));
+  document.getElementById('panel-'+type).classList.add('print-target');
   window.print();
 }
 
-// ── Clear form ──
-function clearForm() {
-  if (!confirm('Clear all fields? Supplier/customer defaults will remain.')) return;
-  document.getElementById('weekNum').value = '';
-  document.getElementById('orderDate').value = '';
-  document.getElementById('vessel').value = '';
-  document.getElementById('containerNum').value = '';
-  document.getElementById('shippingLine').value = '';
-  document.getElementById('seal').value = '';
+function clearForm(){
+  if(!confirm('Clear weekly fields? Defaults will remain.'))return;
+  ['weekNum','orderDate','vessel','containerNum','shippingLine','seal'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('btnDownloadAll').style.display='none';
+  document.getElementById('fileListBanner').style.display='none';
   computeFields();
 }
 
-// ── Init ──
 computeFields();
 </script>
 </body>
