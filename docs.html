@@ -361,17 +361,26 @@ function generateAll(){
 }
 
 // ── PDF ──
-const PDF_OPTS={margin:[10,10,10,10],image:{type:'jpeg',quality:0.98},html2canvas:{scale:2,useCORS:true,logging:false},jsPDF:{unit:'mm',format:'letter',orientation:'portrait'}};
-async function downloadPDF(type){
+function downloadPDF(type){
   if(!currentData){alert('Generate documents first.');return;}
-  await html2pdf().set({...PDF_OPTS,filename:currentData.filenames[type]+'.pdf'}).from(document.getElementById('doc-'+type)).save();
+  document.title=currentData.filenames[type];
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('print-target'));
+  document.getElementById('panel-'+type).classList.add('print-target');
+  window.print();
+  setTimeout(()=>{document.title='Nietos Fresh — Document Generator';},1000);
 }
 async function downloadAllPDFs(){
   if(!currentData){alert('Generate documents first.');return;}
-  for(const t of['po','pi','ggn']){
-    await html2pdf().set({...PDF_OPTS,filename:currentData.filenames[t]+'.pdf'}).from(document.getElementById('doc-'+t)).save();
-    await new Promise(r=>setTimeout(r,800));
+  const types=['po','pi','ggn'];
+  for(const t of types){
+    document.title=currentData.filenames[t];
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('print-target'));
+    document.getElementById('panel-'+t).classList.add('print-target');
+    window.print();
+    await new Promise(r=>setTimeout(r,1500));
   }
+  document.title='Nietos Fresh — Document Generator';
+}
 }
 function printDoc(type){
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('print-target'));
