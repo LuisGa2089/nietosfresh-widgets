@@ -9,6 +9,7 @@
   .l{font-size:12px;text-transform:uppercase;letter-spacing:1.5px;opacity:.7;margin-bottom:8px}
   .n{font-size:42px;font-weight:700;letter-spacing:-1px}
   .d{font-size:15px;opacity:.85;margin-top:4px}
+  .today{font-size:14px;opacity:.65;margin-top:6px}
   .p{margin-top:16px}
   .ph{display:flex;justify-content:space-between;font-size:11px;opacity:.6;margin-bottom:4px}
   .pt{background:rgba(255,255,255,.15);border-radius:20px;height:8px;overflow:hidden}
@@ -20,6 +21,7 @@
   <div class="l">Current Week</div>
   <div class="n" id="wk"></div>
   <div class="d" id="dr"></div>
+  <div class="today" id="td"></div>
   <div class="p">
     <div class="ph"><span>Year progress</span><span id="pc"></span></div>
     <div class="pt"><div class="pf" id="pb"></div></div>
@@ -30,9 +32,11 @@ var n=new Date(),s=new Date(n.getFullYear(),0,1),dy=Math.floor((n-s)/864e5)+1,wk
 var m=new Date(n);m.setDate(n.getDate()-(n.getDay()||7)+1);
 var su=new Date(m);su.setDate(m.getDate()+6);
 var mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+var days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 var pct=Math.round(dy/365*100);
 document.getElementById('wk').textContent='Week '+wk;
 document.getElementById('dr').textContent=mo[m.getMonth()]+' '+m.getDate()+' \u2013 '+mo[su.getMonth()]+' '+su.getDate()+', '+n.getFullYear();
+document.getElementById('td').textContent='Today: '+days[n.getDay()]+', '+mo[n.getMonth()]+' '+n.getDate()+', '+n.getFullYear();
 document.getElementById('pc').textContent=pct+'%';
 document.getElementById('pb').style.width=pct+'%';
 </script>
