@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nietos Fresh — Document Generator</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=Playfair+Display:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-
 <style>
 :root{--g9:#1a3a2a;--g7:#2d6a4f;--g5:#40916c;--g3:#74c69d;--g1:#d8f3dc;--g0:#f0faf3;--a6:#d97706;--a5:#f59e0b;--a1:#fef3c7;--r5:#ef4444;--n9:#1a1a1a;--n7:#404040;--n5:#6b6b6b;--n3:#b3b3b3;--n1:#f0f0f0;--w:#fff}
 *{margin:0;padding:0;box-sizing:border-box}
@@ -64,7 +63,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--n1);color:var(--n9)}
 .download-all-banner{background:var(--w);border:2px solid var(--g5);border-radius:12px;padding:24px;margin-bottom:20px}
 .download-all-banner h3{font-size:16px;color:var(--g9);margin-bottom:12px}
 .download-all-list{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--g7);line-height:2}
-/* Screenshot upload */
 .screenshot-zone{border:2px dashed var(--g3);border-radius:12px;padding:24px;text-align:center;cursor:pointer;transition:all .2s;margin-top:12px;background:var(--g0)}
 .screenshot-zone:hover{border-color:var(--g5);background:var(--g1)}
 .screenshot-zone.has-image{border-style:solid;border-color:var(--g5)}
@@ -72,7 +70,27 @@ body{font-family:'DM Sans',sans-serif;background:var(--n1);color:var(--n9)}
 .screenshot-zone p{font-size:13px;color:var(--n5)}
 .screenshot-zone .hint{font-size:11px;color:var(--n3)}
 .ggn-screenshot-doc{max-width:100%;border:1px solid #ddd;border-radius:8px;margin-top:16px}
-@media print{body{background:#fff}.header,.tabs,.btn-row,.no-print,.download-banner,.download-all-banner{display:none!important}.container{max-width:100%;margin:0;padding:0}.panel{display:block!important}.panel:not(.print-target){display:none!important}.panel.print-target{display:block!important}.doc-preview{box-shadow:none;border-radius:0;padding:20px;margin:0}.form-card{display:none}.doc-logo{height:100px}}
+.save-tip{background:var(--a1);border-radius:8px;padding:10px 16px;font-size:12px;color:var(--a6);margin-top:8px;line-height:1.5;display:none}
+.save-tip.show{display:block}
+
+/* ── Print styles ── */
+@media print{
+  body{background:#fff!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;color-adjust:exact!important}
+  .header,.tabs,.btn-row,.no-print,.download-banner,.download-all-banner,.save-tip{display:none!important}
+  .container{max-width:100%;margin:0;padding:0}
+  .panel{display:block!important}
+  .panel:not(.print-target){display:none!important}
+  .panel.print-target{display:block!important}
+  .doc-preview{box-shadow:none;border-radius:0;padding:20px;margin:0}
+  .form-card{display:none!important}
+  .doc-logo{height:100px}
+  .doc-table th{background:var(--g9)!important;color:#fff!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  .doc-total-row td{background:var(--g0)!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  .doc-note{background:var(--a1)!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  .doc-status-badge{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  .status-certified{background:var(--g1)!important;color:var(--g7)!important}
+}
+
 @media(max-width:640px){.form-grid{grid-template-columns:1fr}.doc-header-row{flex-direction:column;gap:16px}.header{flex-direction:column;gap:8px;align-items:flex-start}.download-banner{flex-direction:column;align-items:flex-start}}
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}.form-card,.doc-preview,.download-banner{animation:fadeIn .3s ease both}
 </style>
@@ -98,6 +116,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--n1);color:var(--n9)}
   <!-- ═══ INPUT FORM ═══ -->
   <div class="panel active" id="panel-input">
     <div class="form-card">
+
       <div class="form-section-title">Cliente / Client</div>
       <div class="form-grid">
         <div class="form-group"><label>Seleccionar Cliente</label>
@@ -166,7 +185,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--n1);color:var(--n9)}
 
       <div class="btn-row">
         <button class="btn btn-primary" onclick="generateAll()">🚀 Generate All Documents</button>
-        <button class="btn btn-amber" id="btnDownloadAll" onclick="downloadAllPDFs()" style="display:none">📦 Download All PDFs</button>
         <button class="btn btn-secondary" onclick="clearForm()">🗑️ Clear Form</button>
       </div>
     </div>
@@ -174,8 +192,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--n1);color:var(--n9)}
       <h3>📦 Generated Documents</h3>
       <div class="download-all-list" id="fileListContent"></div>
       <div style="margin-top:16px;display:flex;gap:12px;flex-wrap:wrap">
-        <button class="btn btn-amber" onclick="downloadAllPDFs()">⬇️ Download All PDFs</button>
-        <button class="btn btn-primary" onclick="switchTab('po')">Preview Documents →</button>
+        <button class="btn btn-primary" onclick="switchTab('po')">Preview & Download →</button>
       </div>
     </div>
   </div>
@@ -185,12 +202,12 @@ body{font-family:'DM Sans',sans-serif;background:var(--n1);color:var(--n9)}
     <div class="download-banner no-print">
       <div class="download-banner-text"><h3>📋 Purchase Order</h3><div class="filename-list" id="po-filename"></div></div>
       <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <button class="btn btn-primary" onclick="downloadPDF('po')">⬇️ Download PDF</button>
-        <button class="btn btn-secondary" onclick="printDoc('po')">🖨️ Print</button>
+        <button class="btn btn-primary" onclick="downloadPDF('po')">⬇️ Save as PDF</button>
         <button class="btn btn-secondary" onclick="switchTab('pi')">Next: Invoice →</button>
         <button class="btn btn-secondary" onclick="switchTab('input')">← Back</button>
       </div>
     </div>
+    <div class="save-tip no-print" id="tip-po">💡 In the print dialog, select <strong>"Save as PDF"</strong> as the destination. The filename is already set for you.</div>
     <div class="doc-preview" id="doc-po"></div>
   </div>
 
@@ -199,12 +216,12 @@ body{font-family:'DM Sans',sans-serif;background:var(--n1);color:var(--n9)}
     <div class="download-banner no-print">
       <div class="download-banner-text"><h3>💰 Proforma Invoice</h3><div class="filename-list" id="pi-filename"></div></div>
       <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <button class="btn btn-primary" onclick="downloadPDF('pi')">⬇️ Download PDF</button>
-        <button class="btn btn-secondary" onclick="printDoc('pi')">🖨️ Print</button>
+        <button class="btn btn-primary" onclick="downloadPDF('pi')">⬇️ Save as PDF</button>
         <button class="btn btn-secondary" onclick="switchTab('ggn')">Next: GGN →</button>
         <button class="btn btn-secondary" onclick="switchTab('input')">← Back</button>
       </div>
     </div>
+    <div class="save-tip no-print" id="tip-pi">💡 In the print dialog, select <strong>"Save as PDF"</strong> as the destination. The filename is already set for you.</div>
     <div class="doc-preview" id="doc-pi"></div>
   </div>
 
@@ -213,12 +230,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--n1);color:var(--n9)}
     <div class="download-banner no-print">
       <div class="download-banner-text"><h3>✅ GGN Check</h3><div class="filename-list" id="ggn-filename"></div></div>
       <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <button class="btn btn-primary" onclick="downloadPDF('ggn')">⬇️ Download PDF</button>
-        <button class="btn btn-secondary" onclick="printDoc('ggn')">🖨️ Print</button>
-        <button class="btn btn-amber" onclick="downloadAllPDFs()">📦 Download All</button>
-        <button class="btn btn-secondary" onclick="switchTab('input')">← Back</button>
+        <button class="btn btn-primary" onclick="downloadPDF('ggn')">⬇️ Save as PDF</button>
+        <button class="btn btn-secondary" onclick="switchTab('input')">← Back to Form</button>
       </div>
     </div>
+    <div class="save-tip no-print" id="tip-ggn">💡 In the print dialog, select <strong>"Save as PDF"</strong> as the destination. The filename is already set for you.</div>
     <div class="doc-preview" id="doc-ggn"></div>
   </div>
 </div>
@@ -226,9 +242,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--n1);color:var(--n9)}
 <script>
 const LOGO='LOS%20NIETOS%20MARCA-02.png';
 const CLIENTS={gakeal:{name:'El Gakeal S.A.',id:'3-101543539',address:'1.5 km norte del BNCR en Pital, San Carlos',contact:'Xiomara Galarza',email:'facturaelectronicaelgakeal@visasa.com',shortName:'Gakeal'}};
-let currentData=null, screenshotDataUrl=null;
+let currentData=null,screenshotDataUrl=null;
 
-// ── Formatting helpers ──
 function fmtNum(n){return n.toLocaleString('en-US');}
 function fmtMoney(n){return n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});}
 function fmtDate(dateStr){
@@ -236,11 +251,10 @@ function fmtDate(dateStr){
   const d=new Date(dateStr+'T12:00:00');
   const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
   const day=d.getDate();
-  const suffix=day===1||day===21||day===31?'st':day===2||day===22?'nd':day===3||day===23?'rd':'th';
-  return months[d.getMonth()]+' '+day+suffix+', '+d.getFullYear();
+  const s=day===1||day===21||day===31?'st':day===2||day===22?'nd':day===3||day===23?'rd':'th';
+  return months[d.getMonth()]+' '+day+s+', '+d.getFullYear();
 }
 
-// ── Client ──
 function onClientChange(){
   const sel=document.getElementById('clientSelect').value;
   document.querySelectorAll('.custom-client-row').forEach(r=>{sel==='custom'?r.classList.add('show'):r.classList.remove('show')});
@@ -252,14 +266,13 @@ function getClientData(){
   return CLIENTS[sel];
 }
 
-// ── Tabs ──
 function switchTab(tab){
   document.querySelectorAll('.tab').forEach((t,i)=>{const tabs=['input','po','pi','ggn'];t.classList.toggle('active',tabs[i]===tab);});
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active','print-target'));
   const el=document.getElementById('panel-'+tab);if(el)el.classList.add('active');
+  document.querySelectorAll('.save-tip').forEach(t=>t.classList.remove('show'));
 }
 
-// ── Compute ──
 function computeFields(){
   const week=document.getElementById('weekNum').value;
   const boxes=parseFloat(document.getElementById('boxCount').value)||0;
@@ -270,12 +283,10 @@ function computeFields(){
   document.getElementById('refId').value=ref;
   document.getElementById('totalKg').value=fmtNum(boxes*weight)+' kg';
   document.getElementById('totalUsd').value='$'+fmtMoney(boxes*price);
-  // format date
   const raw=document.getElementById('orderDateRaw').value;
   document.getElementById('dateFormatted').textContent=raw?fmtDate(raw):'';
 }
 
-// ── GGN Verify ──
 function verifyGGN(){
   const ggn=document.getElementById('ggnNumber').value;
   navigator.clipboard.writeText(ggn).catch(()=>{});
@@ -283,7 +294,6 @@ function verifyGGN(){
   document.getElementById('screenshotZone').innerHTML='<p>📋 GGN <strong>'+ggn+'</strong> copied to clipboard!</p><p>Paste it in the search box, take a screenshot, then click here to upload it.</p><p class="hint">Or drag & drop the screenshot here</p>';
 }
 
-// ── Screenshot upload ──
 function handleScreenshot(e){
   const file=e.target.files[0];if(!file)return;
   const reader=new FileReader();
@@ -295,7 +305,6 @@ function handleScreenshot(e){
   };
   reader.readAsDataURL(file);
 }
-// drag & drop
 document.addEventListener('DOMContentLoaded',()=>{
   const zone=document.getElementById('screenshotZone');
   zone.addEventListener('dragover',e=>{e.preventDefault();zone.style.borderColor='var(--g5)';});
@@ -309,7 +318,6 @@ document.addEventListener('DOMContentLoaded',()=>{
   });
 });
 
-// ── Form data ──
 function getFormData(){
   const v=id=>document.getElementById(id).value||'-';
   const boxes=parseFloat(v('boxCount'))||0,price=parseFloat(v('pricePerBox'))||0,weight=parseFloat(v('weightPerBox'))||0;
@@ -331,19 +339,17 @@ function getFormData(){
   };
 }
 
-// ── Document generators ──
 function generatePO(d){return`<img src="${LOGO}" alt="Logo" class="doc-logo"><h2>PURCHASE ORDER</h2><div class="doc-meta"><span>DATE: <strong>${d.date}</strong></span><span>Week: <strong>${d.week}</strong></span></div><div class="doc-header-row"><div class="doc-header-col"><h3>Buyer</h3><p><strong>3-102-734221 SRL</strong><br>San Jose, Desamparados, Costa Rica<br>Phone: +506 8828-6345 | +506 7024-8218<br>Email: sales@nietosfresh.com</p></div><div class="doc-header-col"><h3>Supplier</h3><p><strong>${d.supplier.name}</strong><br>${d.supplier.address}<br>GGN: ${d.supplier.ggn}<br>Phone: ${d.supplier.phone}<br>Email: ${d.supplier.email}</p></div></div><table class="doc-table"><tr><th>Quantity</th><th>Description of Goods</th></tr><tr><td>${fmtNum(d.boxes)}</td><td>Cajas de Chayote verde exportación a ${d.weight} kg</td></tr></table><div class="doc-note"><strong>Nota:</strong> Producto debe ser certificado GLOBALG.A.P.<br>GGN debe aparecer en los documentos de entrega y factura.</div><div class="doc-footer"><span><strong>3-102-734221 SRL</strong></span><span class="doc-ref">PO-${d.ref}</span></div>`;}
 
 function generatePI(d){return`<img src="${LOGO}" alt="Logo" class="doc-logo"><div style="text-align:right;margin-bottom:8px" class="doc-ref">PI-${d.ref}</div><h2>PROFORMA INVOICE</h2><div class="doc-header-row"><div class="doc-header-col"><h3>Exporter / Shipper</h3><p><strong>3-102-734221 SRL</strong><br>San Jose, Desamparados, Costa Rica<br>Exporter Code: MAG 3734<br>Tax ID: 3-102-734221<br>Phone: 506 8828-6345 | +506 7024-8218<br>Email: sales@nietosfresh.com</p></div><div class="doc-header-col"><h3>Customer</h3><p><strong>${d.customer.name}</strong><br>${d.customer.id}<br>${d.customer.address}<br>${d.customer.contact}<br>${d.customer.email}</p></div></div><div style="text-align:right;font-size:13px;color:var(--n5);margin-bottom:12px">DATE: ${d.date}</div><table class="doc-table" style="margin-bottom:8px"><tr><td class="doc-row-label">VESSEL</td><td>${d.shipping.vessel}</td></tr><tr><td class="doc-row-label">CONTAINER NUMBER</td><td>${d.shipping.container}</td></tr><tr><td class="doc-row-label">SHIPPING LINE</td><td>${d.shipping.line}</td></tr><tr><td class="doc-row-label">SEAL</td><td>${d.shipping.seal}</td></tr></table><table class="doc-table"><tr><th>Quantity</th><th>Description of Goods</th><th style="text-align:right">US$ Price</th><th style="text-align:right">Line Total</th></tr><tr><td>${fmtNum(d.boxes)}</td><td>Cajas de Chayote verde exportación a ${d.weight} kg</td><td style="text-align:right">${fmtMoney(d.price)}</td><td style="text-align:right">${fmtMoney(d.totalUsd)}</td></tr><tr class="doc-total-row"><td colspan="3" style="text-align:right">SUBTOTAL</td><td style="text-align:right">${fmtMoney(d.totalUsd)}</td></tr><tr class="doc-total-row"><td colspan="3" style="text-align:right"><strong>TOTAL USD</strong></td><td style="text-align:right"><strong>$${fmtMoney(d.totalUsd)}</strong></td></tr></table><div class="doc-footer"><span><strong>3-102-734221 SRL</strong></span><span>Los Nietos Fresh Produce</span></div>`;}
 
 function generateGGN(d){
   const sc=d.ggn.status.includes('Certified')?'status-certified':'status-pending';
-  let screenshotHtml='';
-  if(d.screenshot){screenshotHtml='<div style="margin-top:24px"><h3 style="font-size:13px;font-weight:700;color:var(--g9);margin-bottom:8px">📸 GLOBALG.A.P. Database Verification Screenshot</h3><img src="'+d.screenshot+'" class="ggn-screenshot-doc" alt="GGN Verification Screenshot"></div>';}
-  return`<img src="${LOGO}" alt="Logo" class="doc-logo"><h2>GGN CHECK — GLOBALG.A.P. Verification</h2><div class="doc-meta"><span>Semana: <strong>${d.week}</strong> | Referencia: <strong>${d.ref}</strong></span></div><table class="doc-table"><tr><th colspan="2">Información del Productor</th></tr><tr><td class="doc-row-label">GGN</td><td>${d.ggn.number}</td></tr><tr><td class="doc-row-label">Reg. No</td><td>${d.ggn.regNo}</td></tr><tr><td class="doc-row-label">Company Type</td><td>${d.ggn.companyType}</td></tr><tr><td class="doc-row-label">Nombre</td><td>${d.ggn.producer}</td></tr><tr><td class="doc-row-label">Certification Body</td><td>${d.ggn.certBody}</td></tr><tr><td class="doc-row-label">Scheme</td><td>GLOBALG.A.P.</td></tr></table><table class="doc-table"><tr><th colspan="2">Detalles de Certificación</th></tr><tr><td class="doc-row-label">Producto</td><td>Chayote</td></tr><tr><td class="doc-row-label">Certificate No.</td><td>${d.ggn.certNo}</td></tr><tr><td class="doc-row-label">Cycle</td><td>Current</td></tr><tr><td class="doc-row-label">Status</td><td><span class="doc-status-badge ${sc}">${d.ggn.status}</span></td></tr><tr><td class="doc-row-label">Valid To</td><td>${d.ggn.validTo}</td></tr><tr><td class="doc-row-label">Scheme GR</td><td>${d.ggn.scheme}</td></tr></table><table class="doc-table"><tr><th colspan="2">Atributos del Ciclo Actual</th></tr><tr><td class="doc-row-label">GRASP status</td><td>see GRASP v1.3.1-i</td></tr><tr><td class="doc-row-label">Product Handling</td><td>Facility</td></tr><tr><td class="doc-row-label">Harvest Included</td><td>Included</td></tr><tr><td class="doc-row-label">Audit Type</td><td>announced</td></tr><tr><td class="doc-row-label">Parallel Production (PP)?</td><td>No</td></tr><tr><td class="doc-row-label">Unannounced reward program</td><td>No, annual announced inspection</td></tr><tr><td class="doc-row-label">Parallel Ownership (PO)?</td><td>No</td></tr><tr><td class="doc-row-label">Audit Method</td><td>Onsite</td></tr></table>${screenshotHtml}<div class="doc-footer"><span>Fuente: <a href="https://database.globalgap.org" target="_blank">database.globalgap.org</a></span><span>Verificado para semana ${d.week} — ${d.date}</span></div>`;
+  let ssHtml='';
+  if(d.screenshot){ssHtml='<div style="margin-top:24px"><h3 style="font-size:13px;font-weight:700;color:var(--g9);margin-bottom:8px">📸 GLOBALG.A.P. Database Verification Screenshot</h3><img src="'+d.screenshot+'" class="ggn-screenshot-doc" alt="GGN Verification Screenshot"></div>';}
+  return`<img src="${LOGO}" alt="Logo" class="doc-logo"><h2>GGN CHECK — GLOBALG.A.P. Verification</h2><div class="doc-meta"><span>Semana: <strong>${d.week}</strong> | Referencia: <strong>${d.ref}</strong></span></div><table class="doc-table"><tr><th colspan="2">Información del Productor</th></tr><tr><td class="doc-row-label">GGN</td><td>${d.ggn.number}</td></tr><tr><td class="doc-row-label">Reg. No</td><td>${d.ggn.regNo}</td></tr><tr><td class="doc-row-label">Company Type</td><td>${d.ggn.companyType}</td></tr><tr><td class="doc-row-label">Nombre</td><td>${d.ggn.producer}</td></tr><tr><td class="doc-row-label">Certification Body</td><td>${d.ggn.certBody}</td></tr><tr><td class="doc-row-label">Scheme</td><td>GLOBALG.A.P.</td></tr></table><table class="doc-table"><tr><th colspan="2">Detalles de Certificación</th></tr><tr><td class="doc-row-label">Producto</td><td>Chayote</td></tr><tr><td class="doc-row-label">Certificate No.</td><td>${d.ggn.certNo}</td></tr><tr><td class="doc-row-label">Cycle</td><td>Current</td></tr><tr><td class="doc-row-label">Status</td><td><span class="doc-status-badge ${sc}">${d.ggn.status}</span></td></tr><tr><td class="doc-row-label">Valid To</td><td>${d.ggn.validTo}</td></tr><tr><td class="doc-row-label">Scheme GR</td><td>${d.ggn.scheme}</td></tr></table><table class="doc-table"><tr><th colspan="2">Atributos del Ciclo Actual</th></tr><tr><td class="doc-row-label">GRASP status</td><td>see GRASP v1.3.1-i</td></tr><tr><td class="doc-row-label">Product Handling</td><td>Facility</td></tr><tr><td class="doc-row-label">Harvest Included</td><td>Included</td></tr><tr><td class="doc-row-label">Audit Type</td><td>announced</td></tr><tr><td class="doc-row-label">Parallel Production (PP)?</td><td>No</td></tr><tr><td class="doc-row-label">Unannounced reward program</td><td>No, annual announced inspection</td></tr><tr><td class="doc-row-label">Parallel Ownership (PO)?</td><td>No</td></tr><tr><td class="doc-row-label">Audit Method</td><td>Onsite</td></tr></table>${ssHtml}<div class="doc-footer"><span>Fuente: <a href="https://database.globalgap.org" target="_blank">database.globalgap.org</a></span><span>Verificado para semana ${d.week} — ${d.date}</span></div>`;
 }
 
-// ── Generate all ──
 function generateAll(){
   const d=getFormData();
   if(!d.ref||d.ref==='-'){alert('Please enter the week number first.');return;}
@@ -354,43 +360,32 @@ function generateAll(){
   document.getElementById('po-filename').textContent='📄 '+d.filenames.po+'.pdf';
   document.getElementById('pi-filename').textContent='📄 '+d.filenames.pi+'.pdf';
   document.getElementById('ggn-filename').textContent='📄 '+d.filenames.ggn+'.pdf';
-  document.getElementById('btnDownloadAll').style.display='';
   const banner=document.getElementById('fileListBanner');banner.style.display='block';
   document.getElementById('fileListContent').innerHTML='📄 '+d.filenames.po+'.pdf<br>📄 '+d.filenames.pi+'.pdf<br>📄 '+d.filenames.ggn+'.pdf';
   switchTab('po');
 }
 
-// ── PDF ──
+// ── PDF via Print (full color, proper naming) ──
 function downloadPDF(type){
   if(!currentData){alert('Generate documents first.');return;}
+  // Set document title to desired filename (browser uses this as default PDF name)
   document.title=currentData.filenames[type];
+  // Mark only this panel for printing
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('print-target'));
   document.getElementById('panel-'+type).classList.add('print-target');
+  // Show tip
+  document.getElementById('tip-'+type).classList.add('show');
+  // Trigger print dialog
   window.print();
-  setTimeout(()=>{document.title='Nietos Fresh — Document Generator';},1000);
+  // Restore title after print
+  setTimeout(()=>{document.title='Nietos Fresh — Document Generator';},2000);
 }
-async function downloadAllPDFs(){
-  if(!currentData){alert('Generate documents first.');return;}
-  const types=['po','pi','ggn'];
-  for(const t of types){
-    document.title=currentData.filenames[t];
-    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('print-target'));
-    document.getElementById('panel-'+t).classList.add('print-target');
-    window.print();
-    await new Promise(r=>setTimeout(r,1500));
-  }
-  document.title='Nietos Fresh — Document Generator';
-}
-}
-function printDoc(type){
-  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('print-target'));
-  document.getElementById('panel-'+type).classList.add('print-target');
-  window.print();
-}
+
+function printDoc(type){downloadPDF(type);}
+
 function clearForm(){
   if(!confirm('Clear weekly fields? Defaults will remain.'))return;
   ['weekNum','orderDateRaw','vessel','containerNum','shippingLine','seal'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('btnDownloadAll').style.display='none';
   document.getElementById('fileListBanner').style.display='none';
   document.getElementById('dateFormatted').textContent='';
   screenshotDataUrl=null;
