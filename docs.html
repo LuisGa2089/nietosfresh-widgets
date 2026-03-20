@@ -6,28 +6,26 @@
 <title>Nietos Fresh — Document Generator</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=Playfair+Display:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root{--g9:#1a3a2a;--g7:#2d6a4f;--g5:#40916c;--g3:#74c69d;--g1:#d8f3dc;--g0:#f0faf3;--a6:#d97706;--a5:#f59e0b;--a1:#fef3c7;--r5:#ef4444;--n9:#1a1a1a;--n7:#404040;--n5:#6b6b6b;--n3:#b3b3b3;--n1:#f0f0f0;--w:#fff}
+:root{--g9:#1a3a2a;--g7:#2d6a4f;--g5:#40916c;--g3:#74c69d;--g1:#d8f3dc;--g0:#f0faf3;--a6:#d97706;--a5:#f59e0b;--a1:#fef3c7;--n9:#1a1a1a;--n7:#404040;--n5:#6b6b6b;--n3:#b3b3b3;--n1:#f0f0f0;--w:#fff}
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'DM Sans',sans-serif;background:var(--n1);color:var(--n9)}
 .header{background:linear-gradient(135deg,var(--g9),var(--g7));color:var(--w);padding:16px 32px;display:flex;align-items:center;justify-content:space-between}
-.header-left{display:flex;align-items:center;gap:16px}
-.header-logo{height:72px}
-.header-text h1{font-family:'Playfair Display',serif;font-size:20px}
-.header-text p{font-size:12px;opacity:.7;margin-top:2px}
+.header-left{display:flex;align-items:center;gap:16px}.header-logo{height:72px}
+.header-text h1{font-family:'Playfair Display',serif;font-size:20px}.header-text p{font-size:12px;opacity:.7;margin-top:2px}
 .header-badge{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:6px 14px;font-size:12px;font-weight:600}
-.tabs{display:flex;background:var(--w);border-bottom:2px solid var(--n1);padding:0 32px;overflow-x:auto}
-.tab{padding:14px 24px;font-size:14px;font-weight:600;color:var(--n5);cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;user-select:none;white-space:nowrap}
+.tabs{display:flex;background:var(--w);border-bottom:2px solid var(--n1);padding:0 24px;overflow-x:auto}
+.tab{padding:14px 18px;font-size:13px;font-weight:600;color:var(--n5);cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;user-select:none;white-space:nowrap}
 .tab:hover{color:var(--g7)}.tab.active{color:var(--g7);border-bottom-color:var(--g5)}
 .container{max-width:1000px;margin:24px auto;padding:0 24px}
 .panel{display:none}.panel.active{display:block}
 .form-card{background:var(--w);border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.06);overflow:hidden}
 .form-section-title{background:var(--g9);color:var(--w);padding:12px 24px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:20px 24px}
-.form-group{display:flex;flex-direction:column;gap:4px}
-.form-group.full{grid-column:1/-1}
+.form-group{display:flex;flex-direction:column;gap:4px}.form-group.full{grid-column:1/-1}
 .form-group label{font-size:12px;font-weight:600;color:var(--n5);text-transform:uppercase;letter-spacing:.5px}
-.form-group input,.form-group select{padding:10px 14px;border:1.5px solid var(--n1);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--n9);transition:border-color .2s;background:var(--w)}
-.form-group input:focus,.form-group select:focus{outline:none;border-color:var(--g5);box-shadow:0 0 0 3px rgba(64,145,108,.1)}
+.form-group input,.form-group select,.form-group textarea{padding:10px 14px;border:1.5px solid var(--n1);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--n9);transition:border-color .2s;background:var(--w)}
+.form-group textarea{min-height:100px;resize:vertical;line-height:1.5}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:var(--g5);box-shadow:0 0 0 3px rgba(64,145,108,.1)}
 .form-group .computed{background:var(--g0);border-color:var(--g3);font-family:'JetBrains Mono',monospace;font-weight:500;color:var(--g7)}
 .form-group .hint{font-size:11px;color:var(--n3);margin-top:2px}
 .custom-client-row{display:none}.custom-client-row.show{display:flex;flex-direction:column;gap:4px}
@@ -36,15 +34,14 @@ body{font-family:'DM Sans',sans-serif;background:var(--n1);color:var(--n9)}
 .btn-primary{background:var(--g7);color:var(--w)}.btn-primary:hover{background:var(--g9)}
 .btn-secondary{background:var(--n1);color:var(--n7)}.btn-secondary:hover{background:var(--n3)}
 .btn-amber{background:var(--a5);color:var(--w)}.btn-amber:hover{background:var(--a6)}
-.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn-sm{padding:6px 12px;font-size:12px}
 .doc-preview{background:var(--w);border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.06);padding:40px;margin-top:20px;max-width:800px;margin-left:auto;margin-right:auto}
 .doc-logo{height:100px;display:block;margin:0 auto 16px}
 .doc-preview h2{font-family:'Playfair Display',serif;font-size:22px;text-align:center;margin-bottom:24px;color:var(--g9)}
 .doc-table{width:100%;border-collapse:collapse;font-size:13px;margin:16px 0}
 .doc-table th,.doc-table td{border:1px solid #ddd;padding:8px 12px;text-align:left}
 .doc-table th{background:var(--g9);color:var(--w);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.5px}
-.doc-table td{color:var(--n7)}
-.doc-row-label{font-weight:600;color:var(--n9);width:200px}
+.doc-table td{color:var(--n7)}.doc-row-label{font-weight:600;color:var(--n9);width:200px}
 .doc-header-row{display:flex;justify-content:space-between;margin-bottom:20px;gap:40px}
 .doc-header-col{flex:1}
 .doc-header-col h3{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--g7);margin-bottom:8px;border-bottom:2px solid var(--g1);padding-bottom:4px}
@@ -55,48 +52,45 @@ body{font-family:'DM Sans',sans-serif;background:var(--n1);color:var(--n9)}
 .doc-note{margin-top:20px;padding:12px 16px;background:var(--a1);border-radius:8px;font-size:12px;color:var(--a6);line-height:1.5}
 .doc-footer{margin-top:32px;padding-top:16px;border-top:1px solid var(--n1);font-size:12px;color:var(--n5);display:flex;justify-content:space-between}
 .doc-status-badge{display:inline-block;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700}
-.status-certified{background:var(--g1);color:var(--g7)}
-.status-pending{background:var(--a1);color:var(--a6)}
+.status-certified{background:var(--g1);color:var(--g7)}.status-pending{background:var(--a1);color:var(--a6)}
 .download-banner{background:var(--g0);border:2px solid var(--g3);border-radius:12px;padding:20px 24px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
 .download-banner-text h3{font-size:16px;color:var(--g9);margin-bottom:4px}
 .download-banner .filename-list{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--g7);margin-top:8px}
 .download-all-banner{background:var(--w);border:2px solid var(--g5);border-radius:12px;padding:24px;margin-bottom:20px}
 .download-all-banner h3{font-size:16px;color:var(--g9);margin-bottom:12px}
 .download-all-list{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--g7);line-height:2}
-.screenshot-zone{border:2px dashed var(--g3);border-radius:12px;padding:24px;text-align:center;cursor:pointer;transition:all .2s;margin-top:12px;background:var(--g0)}
-.screenshot-zone:hover{border-color:var(--g5);background:var(--g1)}
+.screenshot-zone,.photo-zone{border:2px dashed var(--g3);border-radius:12px;padding:24px;text-align:center;cursor:pointer;transition:all .2s;margin-top:8px;background:var(--g0)}
+.screenshot-zone:hover,.photo-zone:hover{border-color:var(--g5);background:var(--g1)}
 .screenshot-zone.has-image{border-style:solid;border-color:var(--g5)}
 .screenshot-zone img{max-width:100%;border-radius:8px;margin-top:8px}
-.screenshot-zone p{font-size:13px;color:var(--n5)}
-.screenshot-zone .hint{font-size:11px;color:var(--n3)}
+.screenshot-zone p,.photo-zone p{font-size:13px;color:var(--n5)}.screenshot-zone .hint,.photo-zone .hint{font-size:11px;color:var(--n3)}
 .ggn-screenshot-doc{max-width:100%;border:1px solid #ddd;border-radius:8px;margin-top:16px}
-.save-tip{background:var(--a1);border-radius:8px;padding:10px 16px;font-size:12px;color:var(--a6);margin-top:8px;line-height:1.5;display:none}
-.save-tip.show{display:block}
-
-/* ── Print styles ── */
+.photo-thumbs{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.photo-thumb{width:80px;height:80px;object-fit:cover;border-radius:8px;border:2px solid var(--g3);cursor:pointer;transition:opacity .2s}
+.photo-thumb:hover{opacity:.7}
+.doc-photos{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+.doc-photos img{width:100%;border-radius:8px;border:1px solid #ddd}
+.checklist-item{display:flex;align-items:center;gap:8px;padding:6px 0;font-size:13px;color:var(--n7)}
+.checklist-item input[type=checkbox]{width:16px;height:16px;accent-color:var(--g5)}
 @media print{
   body{background:#fff!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;color-adjust:exact!important}
-  .header,.tabs,.btn-row,.no-print,.download-banner,.download-all-banner,.save-tip{display:none!important}
+  .header,.tabs,.btn-row,.no-print,.download-banner,.download-all-banner{display:none!important}
   .container{max-width:100%;margin:0;padding:0}
-  .panel{display:block!important}
-  .panel:not(.print-target){display:none!important}
-  .panel.print-target{display:block!important}
-  .doc-preview{box-shadow:none;border-radius:0;padding:20px;margin:0}
-  .form-card{display:none!important}
+  .panel{display:block!important}.panel:not(.print-target){display:none!important}.panel.print-target{display:block!important}
+  .doc-preview{box-shadow:none;border-radius:0;padding:20px;margin:0}.form-card{display:none!important}
   .doc-logo{height:100px}
-  .doc-table th{background:var(--g9)!important;color:#fff!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
-  .doc-total-row td{background:var(--g0)!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
-  .doc-note{background:var(--a1)!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
-  .doc-status-badge{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
-  .status-certified{background:var(--g1)!important;color:var(--g7)!important}
+  .doc-table th{background:#1a3a2a!important;color:#fff!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  .doc-total-row td{background:#f0faf3!important;-webkit-print-color-adjust:exact!important}
+  .doc-note{background:#fef3c7!important;-webkit-print-color-adjust:exact!important}
+  .status-certified{background:#d8f3dc!important;color:#2d6a4f!important;-webkit-print-color-adjust:exact!important}
+  .doc-photos{page-break-inside:avoid}
+  .doc-photos img{max-height:350px;object-fit:contain}
 }
-
-@media(max-width:640px){.form-grid{grid-template-columns:1fr}.doc-header-row{flex-direction:column;gap:16px}.header{flex-direction:column;gap:8px;align-items:flex-start}.download-banner{flex-direction:column;align-items:flex-start}}
+@media(max-width:640px){.form-grid{grid-template-columns:1fr}.doc-header-row{flex-direction:column;gap:16px}.header{flex-direction:column;gap:8px;align-items:flex-start}.download-banner{flex-direction:column;align-items:flex-start}.doc-photos{grid-template-columns:1fr}}
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}.form-card,.doc-preview,.download-banner{animation:fadeIn .3s ease both}
 </style>
 </head>
 <body>
-
 <div class="header">
   <div class="header-left">
     <img src="LOS%20NIETOS%20MARCA-02.png" alt="Los Nietos Fresh Produce" class="header-logo">
@@ -104,294 +98,316 @@ body{font-family:'DM Sans',sans-serif;background:var(--n1);color:var(--n9)}
   </div>
   <div class="header-badge">🌿 Chayote</div>
 </div>
-
 <div class="tabs">
-  <div class="tab active" onclick="switchTab('input')">📝 Entrada de Datos</div>
-  <div class="tab" onclick="switchTab('po')">📋 Purchase Order</div>
-  <div class="tab" onclick="switchTab('pi')">💰 Proforma Invoice</div>
-  <div class="tab" onclick="switchTab('ggn')">✅ GGN Check</div>
+  <div class="tab active" onclick="switchTab('input')">📝 Datos</div>
+  <div class="tab" onclick="switchTab('po')">📋 PO</div>
+  <div class="tab" onclick="switchTab('pi')">💰 PI</div>
+  <div class="tab" onclick="switchTab('rc')">📦 Reporte</div>
+  <div class="tab" onclick="switchTab('ggn')">✅ GGN</div>
+</div>
+<div class="container">
+
+<!-- ═══ INPUT FORM ═══ -->
+<div class="panel active" id="panel-input">
+<div class="form-card">
+  <div class="form-section-title">Cliente / Client</div>
+  <div class="form-grid">
+    <div class="form-group"><label>Seleccionar Cliente</label>
+      <select id="clientSelect" onchange="onClientChange()"><option value="gakeal">El Gakeal S.A.</option><option value="custom">+ Add New Client</option></select></div>
+    <div class="form-group"><label>Nombre Corto (archivos)</label><input type="text" id="clientShortName" value="Gakeal"><span class="hint">Para nombre del PDF</span></div>
+    <div class="form-group custom-client-row"><label>Nombre Completo</label><input type="text" id="customClientName"></div>
+    <div class="form-group custom-client-row"><label>Cédula Jurídica</label><input type="text" id="customClientId"></div>
+    <div class="form-group custom-client-row"><label>Dirección</label><input type="text" id="customClientAddress"></div>
+    <div class="form-group custom-client-row"><label>Contacto</label><input type="text" id="customClientContact"></div>
+    <div class="form-group custom-client-row"><label>Email</label><input type="text" id="customClientEmail"></div>
+  </div>
+
+  <div class="form-section-title">Datos de la Orden</div>
+  <div class="form-grid">
+    <div class="form-group"><label>Número de Semana</label><input type="number" id="weekNum" placeholder="Ej: 12" oninput="computeFields()"></div>
+    <div class="form-group"><label>Fecha de la Orden</label><input type="date" id="orderDateRaw" onchange="computeFields()"><span class="hint" id="dateFormatted"></span></div>
+    <div class="form-group"><label>Referencia / Record ID</label><input type="text" id="refId" class="computed" readonly><span class="hint">Automático</span></div>
+    <div class="form-group"><label>Cantidad de Cajas</label><input type="number" id="boxCount" value="288" oninput="computeFields()"></div>
+    <div class="form-group"><label>Precio por Caja (USD)</label><input type="number" id="pricePerBox" value="7.70" step="0.01" oninput="computeFields()"></div>
+    <div class="form-group"><label>Peso por Caja (kg)</label><input type="number" id="weightPerBox" value="8.5" step="0.1" oninput="computeFields()"></div>
+    <div class="form-group"><label>Total Kg</label><input type="text" id="totalKg" class="computed" readonly></div>
+    <div class="form-group"><label>Total USD</label><input type="text" id="totalUsd" class="computed" readonly></div>
+  </div>
+
+  <div class="form-section-title">Proveedor / Supplier</div>
+  <div class="form-grid">
+    <div class="form-group"><label>Nombre</label><input type="text" id="supplierName" value="José Rafael Meza"></div>
+    <div class="form-group"><label>Dirección</label><input type="text" id="supplierAddress" value="Ujarrás, Cartago"></div>
+    <div class="form-group"><label>GGN</label><input type="text" id="supplierGgn" value="4063651018462"></div>
+    <div class="form-group"><label>Teléfono</label><input type="text" id="supplierPhone" value="506 2574-3247 | +506 8880-6461"></div>
+    <div class="form-group"><label>Email</label><input type="text" id="supplierEmail" value="facturacion@jrnewfruits.com"></div>
+  </div>
+
+  <div class="form-section-title">Datos de Envío (PI)</div>
+  <div class="form-grid">
+    <div class="form-group"><label>Vessel</label><input type="text" id="vessel" placeholder="Nombre del barco (o -)"></div>
+    <div class="form-group"><label>Container Number</label><input type="text" id="containerNum" placeholder="Número de contenedor (o -)"></div>
+    <div class="form-group"><label>Shipping Line</label><input type="text" id="shippingLine" placeholder="Naviera (o -)"></div>
+    <div class="form-group"><label>Seal</label><input type="text" id="seal" placeholder="Marchamo (o -)"></div>
+  </div>
+
+  <div class="form-section-title">Transporte (Reporte de Carga)</div>
+  <div class="form-grid">
+    <div class="form-group"><label>Inspector Responsable</label>
+      <select id="inspector"><option value="Gabriel Carvajal">Gabriel Carvajal</option><option value="Nicolas Sterloff">Nicolas Sterloff</option></select></div>
+    <div class="form-group"><label>Fecha de Inspección</label><input type="date" id="inspDateRaw" onchange="computeFields()"><span class="hint" id="inspDateFormatted"></span></div>
+    <div class="form-group"><label>Ubicación de Carga</label><input type="text" id="loadLocation" value="Ujarrás, Paraíso de Cartago, Costa Rica"></div>
+    <div class="form-group"><label>Placa del Cabezal</label><input type="text" id="truckPlate" value="144596"></div>
+    <div class="form-group"><label>Nombre del Chofer</label><input type="text" id="driverName" value="Gerardo Villalobos Rodriguez"></div>
+    <div class="form-group"><label>Teléfono del Chofer</label><input type="text" id="driverPhone" placeholder="Opcional"></div>
+    <div class="form-group"><label>Naviera (transporte)</label><input type="text" id="rcNaviera" placeholder="NA si es local"></div>
+    <div class="form-group"><label>No. Contenedor (transporte)</label><input type="text" id="rcContainer" placeholder="NA si es local"></div>
+    <div class="form-group"><label>Termógrafo</label><input type="text" id="thermograph" placeholder="NA"></div>
+    <div class="form-group"><label>Marchamo</label><input type="text" id="rcSeal" placeholder="NA"></div>
+    <div class="form-group"><label>Marchamo Cliente</label><input type="text" id="rcClientSeal" placeholder="NA"></div>
+    <div class="form-group"><label>Temperatura a Carga</label><input type="text" id="loadTemp" placeholder="NA"></div>
+    <div class="form-group"><label>Número de Pallets</label><input type="number" id="palletCount" value="2" oninput="computeFields()"></div>
+    <div class="form-group"><label>Cajas por Pallet</label><input type="number" id="boxesPerPallet" value="96" oninput="computeFields()"></div>
+    <div class="form-group full"><label>Tipo de Embalaje</label><input type="text" id="packagingType" value="Cajas y separadores suministrados por El Gakeal S.A."></div>
+    <div class="form-group full"><label>Inspección de Contenedor — Comentarios</label>
+      <textarea id="inspComments">Se entrega producto en camion propiedad de El Gakeal
+Limpieza e higiene aprobada antes de la carga
+Sin presencia de insectos o plagas
+Condición estructural aprobada</textarea>
+      <span class="hint">Editar si es necesario. Cada línea es un punto del checklist.</span></div>
+    <div class="form-group full"><label>Conclusiones</label>
+      <textarea id="rcConclusions" style="min-height:140px"></textarea>
+      <span class="hint">Se genera automáticamente al crear documentos. Puedes editar antes de imprimir.</span>
+      <button class="btn btn-sm btn-secondary" onclick="regenerateConclusion()" style="margin-top:6px;width:fit-content">🔄 Regenerar Conclusión</button></div>
+    <div class="form-group full"><label>Fotografías de Carga</label>
+      <div class="photo-zone" id="photoZone" onclick="document.getElementById('photoInput').click()">
+        <p>📸 Click para subir fotos o drag & drop</p>
+        <p class="hint">Múltiples fotos permitidas (JPG, PNG)</p>
+      </div>
+      <input type="file" id="photoInput" accept="image/*" multiple style="display:none" onchange="handlePhotos(event)">
+      <div class="photo-thumbs" id="photoThumbs"></div></div>
+  </div>
+
+  <div class="form-section-title">GGN — GLOBALG.A.P.</div>
+  <div class="form-grid">
+    <div class="form-group"><label>GGN Number</label>
+      <div style="display:flex;gap:8px"><input type="text" id="ggnNumber" value="4063651018462" style="flex:1"><button class="btn btn-primary btn-sm" onclick="verifyGGN()">🔍 Verify</button></div></div>
+    <div class="form-group"><label>Reg. No</label><input type="text" id="ggnRegNo" value="PL-Chile 17431"></div>
+    <div class="form-group"><label>Nombre Productor</label><input type="text" id="ggnProducerName" value="Jose Rafael Meza Moya"></div>
+    <div class="form-group"><label>Company Type</label><input type="text" id="ggnCompanyType" value="Producer"></div>
+    <div class="form-group"><label>Certification Body</label><input type="text" id="ggnCertBody" value="Primus Auditing Ops"></div>
+    <div class="form-group"><label>Certificate No.</label><input type="text" id="ggnCertNo" value="00142-HKVTF-0003"></div>
+    <div class="form-group"><label>Status</label><select id="ggnStatus"><option value="Certified ✓" selected>Certified ✓</option><option value="Pending">Pending</option><option value="Expired">Expired</option></select></div>
+    <div class="form-group"><label>Valid To</label><input type="text" id="ggnValidTo" value="19/01/2027"></div>
+    <div class="form-group full"><label>Scheme GR</label><input type="text" id="ggnScheme" value="GLOBALG.A.P. GR version 5.4-1 GFS"></div>
+    <div class="form-group full"><label>GGN Screenshot</label>
+      <div class="screenshot-zone" id="screenshotZone" onclick="document.getElementById('screenshotInput').click()">
+        <p>📸 Click para subir screenshot o drag & drop</p></div>
+      <input type="file" id="screenshotInput" accept="image/*" style="display:none" onchange="handleScreenshot(event)"></div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-primary" onclick="generateAll()">🚀 Generate All Documents</button>
+    <button class="btn btn-secondary" onclick="clearForm()">🗑️ Clear</button>
+  </div>
+</div>
+<div class="download-all-banner" id="fileListBanner" style="display:none;margin-top:20px">
+  <h3>📦 Generated Documents</h3>
+  <div class="download-all-list" id="fileListContent"></div>
+  <div style="margin-top:16px;display:flex;gap:12px;flex-wrap:wrap">
+    <button class="btn btn-primary" onclick="switchTab('po')">Preview & Download →</button>
+  </div>
+</div>
 </div>
 
-<div class="container">
-  <!-- ═══ INPUT FORM ═══ -->
-  <div class="panel active" id="panel-input">
-    <div class="form-card">
-
-      <div class="form-section-title">Cliente / Client</div>
-      <div class="form-grid">
-        <div class="form-group"><label>Seleccionar Cliente</label>
-          <select id="clientSelect" onchange="onClientChange()"><option value="gakeal">El Gakeal S.A.</option><option value="custom">+ Add New Client</option></select>
-        </div>
-        <div class="form-group"><label>Nombre Corto (para archivos)</label><input type="text" id="clientShortName" value="Gakeal"><span class="hint">Se usa en el nombre del PDF</span></div>
-        <div class="form-group custom-client-row" id="ccName"><label>Nombre Completo</label><input type="text" id="customClientName" placeholder="Ej: Frutas del Valle S.A."></div>
-        <div class="form-group custom-client-row" id="ccId"><label>Cédula Jurídica</label><input type="text" id="customClientId" placeholder="3-101-000000"></div>
-        <div class="form-group custom-client-row" id="ccAddr"><label>Dirección</label><input type="text" id="customClientAddress"></div>
-        <div class="form-group custom-client-row" id="ccContact"><label>Contacto</label><input type="text" id="customClientContact"></div>
-        <div class="form-group custom-client-row" id="ccEmail"><label>Email</label><input type="text" id="customClientEmail"></div>
-      </div>
-
-      <div class="form-section-title">Datos de la Orden (llenar cada semana)</div>
-      <div class="form-grid">
-        <div class="form-group"><label>Número de Semana</label><input type="number" id="weekNum" placeholder="Ej: 10" oninput="computeFields()"></div>
-        <div class="form-group"><label>Fecha de la Orden</label><input type="date" id="orderDateRaw" onchange="computeFields()"><span class="hint" id="dateFormatted"></span></div>
-        <div class="form-group"><label>Referencia / Record ID</label><input type="text" id="refId" class="computed" readonly><span class="hint">Se calcula automáticamente</span></div>
-        <div class="form-group"><label>Cantidad de Cajas</label><input type="number" id="boxCount" value="288" oninput="computeFields()"></div>
-        <div class="form-group"><label>Precio por Caja (USD)</label><input type="number" id="pricePerBox" value="7.70" step="0.01" oninput="computeFields()"></div>
-        <div class="form-group"><label>Peso por Caja (kg)</label><input type="number" id="weightPerBox" value="8.5" step="0.1" oninput="computeFields()"></div>
-        <div class="form-group"><label>Total Kg</label><input type="text" id="totalKg" class="computed" readonly></div>
-        <div class="form-group"><label>Total USD</label><input type="text" id="totalUsd" class="computed" readonly></div>
-      </div>
-
-      <div class="form-section-title">Datos del Proveedor / Supplier</div>
-      <div class="form-grid">
-        <div class="form-group"><label>Nombre</label><input type="text" id="supplierName" value="José Rafael Meza"></div>
-        <div class="form-group"><label>Dirección</label><input type="text" id="supplierAddress" value="Ujarrás, Cartago"></div>
-        <div class="form-group"><label>GGN</label><input type="text" id="supplierGgn" value="4063651018462"></div>
-        <div class="form-group"><label>Teléfono</label><input type="text" id="supplierPhone" value="506 2574-3247 | +506 8880-6461"></div>
-        <div class="form-group"><label>Email</label><input type="text" id="supplierEmail" value="facturacion@jrnewfruits.com"></div>
-      </div>
-
-      <div class="form-section-title">Datos de Envío (Proforma Invoice)</div>
-      <div class="form-grid">
-        <div class="form-group"><label>Vessel</label><input type="text" id="vessel" placeholder="Nombre del barco (o -)"></div>
-        <div class="form-group"><label>Container Number</label><input type="text" id="containerNum" placeholder="Número de contenedor (o -)"></div>
-        <div class="form-group"><label>Shipping Line</label><input type="text" id="shippingLine" placeholder="Naviera (o -)"></div>
-        <div class="form-group"><label>Seal</label><input type="text" id="seal" placeholder="Marchamo (o -)"></div>
-      </div>
-
-      <div class="form-section-title">GGN — Datos GLOBALG.A.P.</div>
-      <div class="form-grid">
-        <div class="form-group"><label>GGN Number</label>
-          <div style="display:flex;gap:8px"><input type="text" id="ggnNumber" value="4063651018462" style="flex:1"><button class="btn btn-primary" onclick="verifyGGN()" style="white-space:nowrap">🔍 Verify</button></div>
-          <span class="hint">Opens GLOBALG.A.P. database to verify certification</span>
-        </div>
-        <div class="form-group"><label>Reg. No</label><input type="text" id="ggnRegNo" value="PL-Chile 17431"></div>
-        <div class="form-group"><label>Nombre Productor</label><input type="text" id="ggnProducerName" value="Jose Rafael Meza Moya"></div>
-        <div class="form-group"><label>Company Type</label><input type="text" id="ggnCompanyType" value="Producer"></div>
-        <div class="form-group"><label>Certification Body</label><input type="text" id="ggnCertBody" value="Primus Auditing Ops"></div>
-        <div class="form-group"><label>Certificate No.</label><input type="text" id="ggnCertNo" value="00142-HKVTF-0003"></div>
-        <div class="form-group"><label>Status</label><select id="ggnStatus"><option value="Certified ✓" selected>Certified ✓</option><option value="Pending">Pending</option><option value="Expired">Expired</option></select></div>
-        <div class="form-group"><label>Valid To</label><input type="text" id="ggnValidTo" value="19/01/2027"></div>
-        <div class="form-group full"><label>Scheme GR</label><input type="text" id="ggnScheme" value="GLOBALG.A.P. GR version 5.4-1 GFS"></div>
-        <div class="form-group full">
-          <label>GGN Verification Screenshot</label>
-          <div class="screenshot-zone" id="screenshotZone" onclick="document.getElementById('screenshotInput').click()">
-            <p>📸 Click to upload screenshot or drag & drop</p>
-            <p class="hint">Take a screenshot from the GLOBALG.A.P. database after clicking "Verify"</p>
-          </div>
-          <input type="file" id="screenshotInput" accept="image/*" style="display:none" onchange="handleScreenshot(event)">
-        </div>
-      </div>
-
-      <div class="btn-row">
-        <button class="btn btn-primary" onclick="generateAll()">🚀 Generate All Documents</button>
-        <button class="btn btn-secondary" onclick="clearForm()">🗑️ Clear Form</button>
-      </div>
-    </div>
-    <div class="download-all-banner" id="fileListBanner" style="display:none;margin-top:20px">
-      <h3>📦 Generated Documents</h3>
-      <div class="download-all-list" id="fileListContent"></div>
-      <div style="margin-top:16px;display:flex;gap:12px;flex-wrap:wrap">
-        <button class="btn btn-primary" onclick="switchTab('po')">Preview & Download →</button>
-      </div>
-    </div>
+<!-- ═══ PO ═══ -->
+<div class="panel" id="panel-po">
+  <div class="download-banner no-print">
+    <div class="download-banner-text"><h3>📋 Purchase Order</h3><div class="filename-list" id="po-filename"></div></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn btn-primary" onclick="downloadPDF('po')">⬇️ Save PDF</button>
+      <button class="btn btn-secondary" onclick="switchTab('pi')">Next →</button>
+      <button class="btn btn-secondary" onclick="switchTab('input')">← Back</button></div>
   </div>
+  <div class="doc-preview" id="doc-po"></div>
+</div>
 
-  <!-- ═══ PURCHASE ORDER ═══ -->
-  <div class="panel" id="panel-po">
-    <div class="download-banner no-print">
-      <div class="download-banner-text"><h3>📋 Purchase Order</h3><div class="filename-list" id="po-filename"></div></div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <button class="btn btn-primary" onclick="downloadPDF('po')">⬇️ Save as PDF</button>
-        <button class="btn btn-secondary" onclick="switchTab('pi')">Next: Invoice →</button>
-        <button class="btn btn-secondary" onclick="switchTab('input')">← Back</button>
-      </div>
-    </div>
-    <div class="save-tip no-print" id="tip-po">💡 In the print dialog, select <strong>"Save as PDF"</strong> as the destination. The filename is already set for you.</div>
-    <div class="doc-preview" id="doc-po"></div>
+<!-- ═══ PI ═══ -->
+<div class="panel" id="panel-pi">
+  <div class="download-banner no-print">
+    <div class="download-banner-text"><h3>💰 Proforma Invoice</h3><div class="filename-list" id="pi-filename"></div></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn btn-primary" onclick="downloadPDF('pi')">⬇️ Save PDF</button>
+      <button class="btn btn-secondary" onclick="switchTab('rc')">Next →</button>
+      <button class="btn btn-secondary" onclick="switchTab('input')">← Back</button></div>
   </div>
+  <div class="doc-preview" id="doc-pi"></div>
+</div>
 
-  <!-- ═══ PROFORMA INVOICE ═══ -->
-  <div class="panel" id="panel-pi">
-    <div class="download-banner no-print">
-      <div class="download-banner-text"><h3>💰 Proforma Invoice</h3><div class="filename-list" id="pi-filename"></div></div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <button class="btn btn-primary" onclick="downloadPDF('pi')">⬇️ Save as PDF</button>
-        <button class="btn btn-secondary" onclick="switchTab('ggn')">Next: GGN →</button>
-        <button class="btn btn-secondary" onclick="switchTab('input')">← Back</button>
-      </div>
-    </div>
-    <div class="save-tip no-print" id="tip-pi">💡 In the print dialog, select <strong>"Save as PDF"</strong> as the destination. The filename is already set for you.</div>
-    <div class="doc-preview" id="doc-pi"></div>
+<!-- ═══ REPORTE DE CARGA ═══ -->
+<div class="panel" id="panel-rc">
+  <div class="download-banner no-print">
+    <div class="download-banner-text"><h3>📦 Reporte de Carga</h3><div class="filename-list" id="rc-filename"></div></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn btn-primary" onclick="downloadPDF('rc')">⬇️ Save PDF</button>
+      <button class="btn btn-secondary" onclick="switchTab('ggn')">Next →</button>
+      <button class="btn btn-secondary" onclick="switchTab('input')">← Back</button></div>
   </div>
+  <div class="doc-preview" id="doc-rc"></div>
+</div>
 
-  <!-- ═══ GGN CHECK ═══ -->
-  <div class="panel" id="panel-ggn">
-    <div class="download-banner no-print">
-      <div class="download-banner-text"><h3>✅ GGN Check</h3><div class="filename-list" id="ggn-filename"></div></div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <button class="btn btn-primary" onclick="downloadPDF('ggn')">⬇️ Save as PDF</button>
-        <button class="btn btn-secondary" onclick="switchTab('input')">← Back to Form</button>
-      </div>
-    </div>
-    <div class="save-tip no-print" id="tip-ggn">💡 In the print dialog, select <strong>"Save as PDF"</strong> as the destination. The filename is already set for you.</div>
-    <div class="doc-preview" id="doc-ggn"></div>
+<!-- ═══ GGN ═══ -->
+<div class="panel" id="panel-ggn">
+  <div class="download-banner no-print">
+    <div class="download-banner-text"><h3>✅ GGN Check</h3><div class="filename-list" id="ggn-filename"></div></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn btn-primary" onclick="downloadPDF('ggn')">⬇️ Save PDF</button>
+      <button class="btn btn-secondary" onclick="switchTab('input')">← Back</button></div>
   </div>
+  <div class="doc-preview" id="doc-ggn"></div>
+</div>
+
 </div>
 
 <script>
 const LOGO='LOS%20NIETOS%20MARCA-02.png';
 const CLIENTS={gakeal:{name:'El Gakeal S.A.',id:'3-101543539',address:'1.5 km norte del BNCR en Pital, San Carlos',contact:'Xiomara Galarza',email:'facturaelectronicaelgakeal@visasa.com',shortName:'Gakeal'}};
-let currentData=null,screenshotDataUrl=null;
+let currentData=null,screenshotDataUrl=null,photoDataUrls=[];
 
-function fmtNum(n){return n.toLocaleString('en-US');}
-function fmtMoney(n){return n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});}
-function fmtDate(dateStr){
-  if(!dateStr)return'-';
-  const d=new Date(dateStr+'T12:00:00');
-  const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
-  const day=d.getDate();
-  const s=day===1||day===21||day===31?'st':day===2||day===22?'nd':day===3||day===23?'rd':'th';
-  return months[d.getMonth()]+' '+day+s+', '+d.getFullYear();
-}
+function fN(n){return n.toLocaleString('en-US');}
+function fM(n){return n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});}
+function fD(ds){if(!ds)return'-';const d=new Date(ds+'T12:00:00'),m=['January','February','March','April','May','June','July','August','September','October','November','December'],dy=d.getDate(),s=dy===1||dy===21||dy===31?'st':dy===2||dy===22?'nd':dy===3||dy===23?'rd':'th';return m[d.getMonth()]+' '+dy+s+', '+d.getFullYear();}
+function fDes(ds){if(!ds)return'-';const d=new Date(ds+'T12:00:00'),dias=['domingo','lunes','martes','miércoles','jueves','viernes','sábado'],meses=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];return dias[d.getDay()]+' '+d.getDate()+' de '+meses[d.getMonth()]+', '+d.getFullYear();}
 
-function onClientChange(){
-  const sel=document.getElementById('clientSelect').value;
-  document.querySelectorAll('.custom-client-row').forEach(r=>{sel==='custom'?r.classList.add('show'):r.classList.remove('show')});
-  document.getElementById('clientShortName').value=sel==='custom'?'':CLIENTS[sel].shortName;
-}
-function getClientData(){
-  const sel=document.getElementById('clientSelect').value;
-  if(sel==='custom')return{name:document.getElementById('customClientName').value||'-',id:document.getElementById('customClientId').value||'-',address:document.getElementById('customClientAddress').value||'-',contact:document.getElementById('customClientContact').value||'-',email:document.getElementById('customClientEmail').value||'-'};
-  return CLIENTS[sel];
-}
+function onClientChange(){const s=document.getElementById('clientSelect').value;document.querySelectorAll('.custom-client-row').forEach(r=>{s==='custom'?r.classList.add('show'):r.classList.remove('show')});document.getElementById('clientShortName').value=s==='custom'?'':CLIENTS[s].shortName;
+  if(s!=='custom'){document.getElementById('packagingType').value='Cajas y separadores suministrados por '+CLIENTS[s].name;}}
+function getCD(){const s=document.getElementById('clientSelect').value;if(s==='custom')return{name:document.getElementById('customClientName').value||'-',id:document.getElementById('customClientId').value||'-',address:document.getElementById('customClientAddress').value||'-',contact:document.getElementById('customClientContact').value||'-',email:document.getElementById('customClientEmail').value||'-'};return CLIENTS[s];}
 
-function switchTab(tab){
-  document.querySelectorAll('.tab').forEach((t,i)=>{const tabs=['input','po','pi','ggn'];t.classList.toggle('active',tabs[i]===tab);});
-  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active','print-target'));
-  const el=document.getElementById('panel-'+tab);if(el)el.classList.add('active');
-  document.querySelectorAll('.save-tip').forEach(t=>t.classList.remove('show'));
-}
+function switchTab(t){const tabs=['input','po','pi','rc','ggn'];document.querySelectorAll('.tab').forEach((el,i)=>{el.classList.toggle('active',tabs[i]===t)});document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active','print-target'));const el=document.getElementById('panel-'+t);if(el)el.classList.add('active');}
 
 function computeFields(){
-  const week=document.getElementById('weekNum').value;
-  const boxes=parseFloat(document.getElementById('boxCount').value)||0;
-  const price=parseFloat(document.getElementById('pricePerBox').value)||0;
-  const weight=parseFloat(document.getElementById('weightPerBox').value)||0;
-  const year=new Date().getFullYear();
-  const ref=week?(week.padStart(2,'0')+'01'+year):'';
+  const w=document.getElementById('weekNum').value,b=parseFloat(document.getElementById('boxCount').value)||0,p=parseFloat(document.getElementById('pricePerBox').value)||0,wt=parseFloat(document.getElementById('weightPerBox').value)||0;
+  const yr=new Date().getFullYear(),ref=w?(w.padStart(2,'0')+'01'+yr):'';
   document.getElementById('refId').value=ref;
-  document.getElementById('totalKg').value=fmtNum(boxes*weight)+' kg';
-  document.getElementById('totalUsd').value='$'+fmtMoney(boxes*price);
-  const raw=document.getElementById('orderDateRaw').value;
-  document.getElementById('dateFormatted').textContent=raw?fmtDate(raw):'';
+  document.getElementById('totalKg').value=fN(b*wt)+' kg';
+  document.getElementById('totalUsd').value='$'+fM(b*p);
+  const raw=document.getElementById('orderDateRaw').value;document.getElementById('dateFormatted').textContent=raw?fD(raw):'';
+  const iraw=document.getElementById('inspDateRaw').value;document.getElementById('inspDateFormatted').textContent=iraw?fDes(iraw):'';
 }
 
-function verifyGGN(){
-  const ggn=document.getElementById('ggnNumber').value;
-  navigator.clipboard.writeText(ggn).catch(()=>{});
-  window.open('https://prod.osapiens.cloud/portal/webbundle/foodplus/field-service-os/supply-chain-portal?app-route-hash=%252Fcertificates','_blank');
-  document.getElementById('screenshotZone').innerHTML='<p>📋 GGN <strong>'+ggn+'</strong> copied to clipboard!</p><p>Paste it in the search box, take a screenshot, then click here to upload it.</p><p class="hint">Or drag & drop the screenshot here</p>';
+function regenerateConclusion(){
+  const d=getFormData();
+  const c=d.customer.name,prod='Chayote Quelite-Verde',bx=d.boxes,pl=d.pallets,bpp=d.boxesPerPallet,ch=d.transport.driver,pk=d.transport.plate;
+  let txt=`El proceso de carga e inspección del ${prod} se ejecutó de manera óptima, cumpliendo con los estándares de calidad, inocuidad y seguridad requeridos para la exportación.\n\nSe verificó que el producto estuviera debidamente embalado, cumpliendo con las especificaciones de cliente y asegurando la protección durante el transporte. En esta operación se cargaron:\n\n• ${pl} pallets de ${bpp} cajas cada uno (total ${fN(bx)} cajas) correctamente estibadas, garantizando la estabilidad de la carga.\n\nDatos del transporte:\n• Transporte: Proporcionado por el cliente.\n• Placa del cabezal: ${pk}\n• Nombre del chofer: ${ch}\n\nEn resumen, la operación se desarrolló sin incidentes, dejando el envío en condiciones óptimas para su despacho y posterior recepción por parte del cliente.`;
+  document.getElementById('rcConclusions').value=txt;
 }
 
-function handleScreenshot(e){
-  const file=e.target.files[0];if(!file)return;
-  const reader=new FileReader();
-  reader.onload=function(ev){
-    screenshotDataUrl=ev.target.result;
-    const zone=document.getElementById('screenshotZone');
-    zone.classList.add('has-image');
-    zone.innerHTML='<p>✅ Screenshot uploaded</p><img src="'+screenshotDataUrl+'" alt="GGN Verification"><p class="hint" style="margin-top:8px">Click to replace</p>';
-  };
-  reader.readAsDataURL(file);
+function verifyGGN(){const g=document.getElementById('ggnNumber').value;navigator.clipboard.writeText(g).catch(()=>{});window.open('https://prod.osapiens.cloud/portal/webbundle/foodplus/field-service-os/supply-chain-portal?app-route-hash=%252Fcertificates','_blank');document.getElementById('screenshotZone').innerHTML='<p>📋 GGN <strong>'+g+'</strong> copiado! Pega en la búsqueda, toma screenshot, y súbelo aquí.</p>';}
+
+function handleScreenshot(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{screenshotDataUrl=ev.target.result;const z=document.getElementById('screenshotZone');z.classList.add('has-image');z.innerHTML='<p>✅ Screenshot subido</p><img src="'+screenshotDataUrl+'"><p class="hint" style="margin-top:8px">Click para reemplazar</p>';};r.readAsDataURL(f);}
+
+function handlePhotos(e){
+  const files=Array.from(e.target.files);
+  files.forEach(f=>{const r=new FileReader();r.onload=ev=>{photoDataUrls.push(ev.target.result);renderPhotoThumbs();};r.readAsDataURL(f);});
 }
+function renderPhotoThumbs(){
+  const c=document.getElementById('photoThumbs');
+  c.innerHTML=photoDataUrls.map((u,i)=>'<img src="'+u+'" class="photo-thumb" title="Click para eliminar" onclick="removePhoto('+i+')">').join('');
+}
+function removePhoto(i){photoDataUrls.splice(i,1);renderPhotoThumbs();}
+
+// Drag & drop
 document.addEventListener('DOMContentLoaded',()=>{
-  const zone=document.getElementById('screenshotZone');
-  zone.addEventListener('dragover',e=>{e.preventDefault();zone.style.borderColor='var(--g5)';});
-  zone.addEventListener('dragleave',()=>{zone.style.borderColor='';});
-  zone.addEventListener('drop',e=>{
-    e.preventDefault();zone.style.borderColor='';
-    const file=e.dataTransfer.files[0];if(!file||!file.type.startsWith('image/'))return;
-    const input=document.getElementById('screenshotInput');
-    const dt=new DataTransfer();dt.items.add(file);input.files=dt.files;
-    handleScreenshot({target:input});
+  ['screenshotZone','photoZone'].forEach(id=>{
+    const z=document.getElementById(id);if(!z)return;
+    z.addEventListener('dragover',e=>{e.preventDefault();z.style.borderColor='var(--g5)';});
+    z.addEventListener('dragleave',()=>{z.style.borderColor='';});
+    z.addEventListener('drop',e=>{e.preventDefault();z.style.borderColor='';
+      if(id==='screenshotZone'){const f=e.dataTransfer.files[0];if(!f)return;const dt=new DataTransfer();dt.items.add(f);document.getElementById('screenshotInput').files=dt.files;handleScreenshot({target:document.getElementById('screenshotInput')});}
+      else{Array.from(e.dataTransfer.files).forEach(f=>{if(!f.type.startsWith('image/'))return;const r=new FileReader();r.onload=ev=>{photoDataUrls.push(ev.target.result);renderPhotoThumbs();};r.readAsDataURL(f);});}
+    });
   });
 });
 
 function getFormData(){
-  const v=id=>document.getElementById(id).value||'-';
-  const boxes=parseFloat(v('boxCount'))||0,price=parseFloat(v('pricePerBox'))||0,weight=parseFloat(v('weightPerBox'))||0;
-  const client=getClientData(),shortName=v('clientShortName'),week=v('weekNum'),ref=v('refId');
-  const wk=week?('WK'+week.padStart(2,'0')):'WK00';
-  const dateFormatted=fmtDate(document.getElementById('orderDateRaw').value);
-  return{week,date:dateFormatted,ref,wk,shortName,boxes,price,weight,
-    totalKg:boxes*weight,totalUsd:boxes*price,
+  const v=id=>(document.getElementById(id)?document.getElementById(id).value:'')||'-';
+  const b=parseFloat(v('boxCount'))||0,p=parseFloat(v('pricePerBox'))||0,w=parseFloat(v('weightPerBox'))||0;
+  const cl=getCD(),sn=v('clientShortName'),wk=v('weekNum'),ref=v('refId'),wkf=wk!=='-'?'WK'+wk.padStart(2,'0'):'WK00';
+  const pl=parseInt(v('palletCount'))||2,bpp=parseInt(v('boxesPerPallet'))||96;
+  return{week:wk,date:fD(document.getElementById('orderDateRaw').value),ref,wk:wkf,shortName:sn,boxes:b,price:p,weight:w,totalKg:b*w,totalUsd:b*p,pallets:pl,boxesPerPallet:bpp,
     supplier:{name:v('supplierName'),address:v('supplierAddress'),ggn:v('supplierGgn'),phone:v('supplierPhone'),email:v('supplierEmail')},
-    customer:client,
-    shipping:{vessel:v('vessel'),container:v('containerNum'),line:v('shippingLine'),seal:v('seal')},
+    customer:cl,shipping:{vessel:v('vessel'),container:v('containerNum'),line:v('shippingLine'),seal:v('seal')},
+    transport:{inspector:v('inspector'),inspDate:fDes(document.getElementById('inspDateRaw').value),location:v('loadLocation'),plate:v('truckPlate'),driver:v('driverName'),driverPhone:v('driverPhone'),naviera:v('rcNaviera'),container:v('rcContainer'),thermograph:v('thermograph'),seal:v('rcSeal'),clientSeal:v('rcClientSeal'),temp:v('loadTemp'),packaging:v('packagingType'),comments:v('inspComments'),conclusions:document.getElementById('rcConclusions').value||'-'},
     ggn:{number:v('ggnNumber'),regNo:v('ggnRegNo'),producer:v('ggnProducerName'),companyType:v('ggnCompanyType'),certBody:v('ggnCertBody'),certNo:v('ggnCertNo'),status:v('ggnStatus'),validTo:v('ggnValidTo'),scheme:v('ggnScheme')},
-    screenshot:screenshotDataUrl,
-    filenames:{
-      po:'02 - Purchase Order - '+shortName+' PO-'+ref+' '+wk,
-      pi:'04 - Proforma Invoice - '+shortName+' PI-'+ref+' '+wk,
-      ggn:'09 - GGN Check - '+ref
-    }
+    screenshot:screenshotDataUrl,photos:photoDataUrls,
+    filenames:{po:'02 - Purchase Order - '+sn+' PO-'+ref+' '+wkf,pi:'04 - Proforma Invoice - '+sn+' PI-'+ref+' '+wkf,rc:'05 - Reporte de Carga - '+sn+' RC-'+ref+' '+wkf,ggn:'09 - GGN Check - '+ref}
   };
 }
 
-function generatePO(d){return`<img src="${LOGO}" alt="Logo" class="doc-logo"><h2>PURCHASE ORDER</h2><div class="doc-meta"><span>DATE: <strong>${d.date}</strong></span><span>Week: <strong>${d.week}</strong></span></div><div class="doc-header-row"><div class="doc-header-col"><h3>Buyer</h3><p><strong>3-102-734221 SRL</strong><br>San Jose, Desamparados, Costa Rica<br>Phone: +506 8828-6345 | +506 7024-8218<br>Email: sales@nietosfresh.com</p></div><div class="doc-header-col"><h3>Supplier</h3><p><strong>${d.supplier.name}</strong><br>${d.supplier.address}<br>GGN: ${d.supplier.ggn}<br>Phone: ${d.supplier.phone}<br>Email: ${d.supplier.email}</p></div></div><table class="doc-table"><tr><th>Quantity</th><th>Description of Goods</th></tr><tr><td>${fmtNum(d.boxes)}</td><td>Cajas de Chayote verde exportación a ${d.weight} kg</td></tr></table><div class="doc-note"><strong>Nota:</strong> Producto debe ser certificado GLOBALG.A.P.<br>GGN debe aparecer en los documentos de entrega y factura.</div><div class="doc-footer"><span><strong>3-102-734221 SRL</strong></span><span class="doc-ref">PO-${d.ref}</span></div>`;}
+function genPO(d){return`<img src="${LOGO}" class="doc-logo"><h2>PURCHASE ORDER</h2><div class="doc-meta"><span>DATE: <strong>${d.date}</strong></span><span>Week: <strong>${d.week}</strong></span></div><div class="doc-header-row"><div class="doc-header-col"><h3>Buyer</h3><p><strong>3-102-734221 SRL</strong><br>San Jose, Desamparados, Costa Rica<br>Phone: +506 8828-6345 | +506 7024-8218<br>Email: sales@nietosfresh.com</p></div><div class="doc-header-col"><h3>Supplier</h3><p><strong>${d.supplier.name}</strong><br>${d.supplier.address}<br>GGN: ${d.supplier.ggn}<br>Phone: ${d.supplier.phone}<br>Email: ${d.supplier.email}</p></div></div><table class="doc-table"><tr><th>Quantity</th><th>Description of Goods</th></tr><tr><td>${fN(d.boxes)}</td><td>Cajas de Chayote verde exportación a ${d.weight} kg</td></tr></table><div class="doc-note"><strong>Nota:</strong> Producto debe ser certificado GLOBALG.A.P.<br>GGN debe aparecer en los documentos de entrega y factura.</div><div class="doc-footer"><span><strong>3-102-734221 SRL</strong></span><span class="doc-ref">PO-${d.ref}</span></div>`;}
 
-function generatePI(d){return`<img src="${LOGO}" alt="Logo" class="doc-logo"><div style="text-align:right;margin-bottom:8px" class="doc-ref">PI-${d.ref}</div><h2>PROFORMA INVOICE</h2><div class="doc-header-row"><div class="doc-header-col"><h3>Exporter / Shipper</h3><p><strong>3-102-734221 SRL</strong><br>San Jose, Desamparados, Costa Rica<br>Exporter Code: MAG 3734<br>Tax ID: 3-102-734221<br>Phone: 506 8828-6345 | +506 7024-8218<br>Email: sales@nietosfresh.com</p></div><div class="doc-header-col"><h3>Customer</h3><p><strong>${d.customer.name}</strong><br>${d.customer.id}<br>${d.customer.address}<br>${d.customer.contact}<br>${d.customer.email}</p></div></div><div style="text-align:right;font-size:13px;color:var(--n5);margin-bottom:12px">DATE: ${d.date}</div><table class="doc-table" style="margin-bottom:8px"><tr><td class="doc-row-label">VESSEL</td><td>${d.shipping.vessel}</td></tr><tr><td class="doc-row-label">CONTAINER NUMBER</td><td>${d.shipping.container}</td></tr><tr><td class="doc-row-label">SHIPPING LINE</td><td>${d.shipping.line}</td></tr><tr><td class="doc-row-label">SEAL</td><td>${d.shipping.seal}</td></tr></table><table class="doc-table"><tr><th>Quantity</th><th>Description of Goods</th><th style="text-align:right">US$ Price</th><th style="text-align:right">Line Total</th></tr><tr><td>${fmtNum(d.boxes)}</td><td>Cajas de Chayote verde exportación a ${d.weight} kg</td><td style="text-align:right">${fmtMoney(d.price)}</td><td style="text-align:right">${fmtMoney(d.totalUsd)}</td></tr><tr class="doc-total-row"><td colspan="3" style="text-align:right">SUBTOTAL</td><td style="text-align:right">${fmtMoney(d.totalUsd)}</td></tr><tr class="doc-total-row"><td colspan="3" style="text-align:right"><strong>TOTAL USD</strong></td><td style="text-align:right"><strong>$${fmtMoney(d.totalUsd)}</strong></td></tr></table><div class="doc-footer"><span><strong>3-102-734221 SRL</strong></span><span>Los Nietos Fresh Produce</span></div>`;}
+function genPI(d){return`<img src="${LOGO}" class="doc-logo"><div style="text-align:right;margin-bottom:8px" class="doc-ref">PI-${d.ref}</div><h2>PROFORMA INVOICE</h2><div class="doc-header-row"><div class="doc-header-col"><h3>Exporter / Shipper</h3><p><strong>3-102-734221 SRL</strong><br>San Jose, Desamparados, Costa Rica<br>Exporter Code: MAG 3734<br>Tax ID: 3-102-734221<br>Phone: 506 8828-6345 | +506 7024-8218<br>Email: sales@nietosfresh.com</p></div><div class="doc-header-col"><h3>Customer</h3><p><strong>${d.customer.name}</strong><br>${d.customer.id}<br>${d.customer.address}<br>${d.customer.contact}<br>${d.customer.email}</p></div></div><div style="text-align:right;font-size:13px;color:var(--n5);margin-bottom:12px">DATE: ${d.date}</div><table class="doc-table" style="margin-bottom:8px"><tr><td class="doc-row-label">VESSEL</td><td>${d.shipping.vessel}</td></tr><tr><td class="doc-row-label">CONTAINER NUMBER</td><td>${d.shipping.container}</td></tr><tr><td class="doc-row-label">SHIPPING LINE</td><td>${d.shipping.line}</td></tr><tr><td class="doc-row-label">SEAL</td><td>${d.shipping.seal}</td></tr></table><table class="doc-table"><tr><th>Quantity</th><th>Description of Goods</th><th style="text-align:right">US$ Price</th><th style="text-align:right">Line Total</th></tr><tr><td>${fN(d.boxes)}</td><td>Cajas de Chayote verde exportación a ${d.weight} kg</td><td style="text-align:right">${fM(d.price)}</td><td style="text-align:right">${fM(d.totalUsd)}</td></tr><tr class="doc-total-row"><td colspan="3" style="text-align:right">SUBTOTAL</td><td style="text-align:right">${fM(d.totalUsd)}</td></tr><tr class="doc-total-row"><td colspan="3" style="text-align:right"><strong>TOTAL USD</strong></td><td style="text-align:right"><strong>$${fM(d.totalUsd)}</strong></td></tr></table><div class="doc-footer"><span><strong>3-102-734221 SRL</strong></span><span>Los Nietos Fresh Produce</span></div>`;}
 
-function generateGGN(d){
-  const sc=d.ggn.status.includes('Certified')?'status-certified':'status-pending';
-  let ssHtml='';
-  if(d.screenshot){ssHtml='<div style="margin-top:24px"><h3 style="font-size:13px;font-weight:700;color:var(--g9);margin-bottom:8px">📸 GLOBALG.A.P. Database Verification Screenshot</h3><img src="'+d.screenshot+'" class="ggn-screenshot-doc" alt="GGN Verification Screenshot"></div>';}
-  return`<img src="${LOGO}" alt="Logo" class="doc-logo"><h2>GGN CHECK — GLOBALG.A.P. Verification</h2><div class="doc-meta"><span>Semana: <strong>${d.week}</strong> | Referencia: <strong>${d.ref}</strong></span></div><table class="doc-table"><tr><th colspan="2">Información del Productor</th></tr><tr><td class="doc-row-label">GGN</td><td>${d.ggn.number}</td></tr><tr><td class="doc-row-label">Reg. No</td><td>${d.ggn.regNo}</td></tr><tr><td class="doc-row-label">Company Type</td><td>${d.ggn.companyType}</td></tr><tr><td class="doc-row-label">Nombre</td><td>${d.ggn.producer}</td></tr><tr><td class="doc-row-label">Certification Body</td><td>${d.ggn.certBody}</td></tr><tr><td class="doc-row-label">Scheme</td><td>GLOBALG.A.P.</td></tr></table><table class="doc-table"><tr><th colspan="2">Detalles de Certificación</th></tr><tr><td class="doc-row-label">Producto</td><td>Chayote</td></tr><tr><td class="doc-row-label">Certificate No.</td><td>${d.ggn.certNo}</td></tr><tr><td class="doc-row-label">Cycle</td><td>Current</td></tr><tr><td class="doc-row-label">Status</td><td><span class="doc-status-badge ${sc}">${d.ggn.status}</span></td></tr><tr><td class="doc-row-label">Valid To</td><td>${d.ggn.validTo}</td></tr><tr><td class="doc-row-label">Scheme GR</td><td>${d.ggn.scheme}</td></tr></table><table class="doc-table"><tr><th colspan="2">Atributos del Ciclo Actual</th></tr><tr><td class="doc-row-label">GRASP status</td><td>see GRASP v1.3.1-i</td></tr><tr><td class="doc-row-label">Product Handling</td><td>Facility</td></tr><tr><td class="doc-row-label">Harvest Included</td><td>Included</td></tr><tr><td class="doc-row-label">Audit Type</td><td>announced</td></tr><tr><td class="doc-row-label">Parallel Production (PP)?</td><td>No</td></tr><tr><td class="doc-row-label">Unannounced reward program</td><td>No, annual announced inspection</td></tr><tr><td class="doc-row-label">Parallel Ownership (PO)?</td><td>No</td></tr><tr><td class="doc-row-label">Audit Method</td><td>Onsite</td></tr></table>${ssHtml}<div class="doc-footer"><span>Fuente: <a href="https://database.globalgap.org" target="_blank">database.globalgap.org</a></span><span>Verificado para semana ${d.week} — ${d.date}</span></div>`;
-}
+function genRC(d){
+  const t=d.transport;
+  const comments=t.comments.split('\n').filter(l=>l.trim()).map(l=>'<div class="checklist-item">✅ '+l.trim()+'</div>').join('');
+  const conclusions=t.conclusions.replace(/\n/g,'<br>').replace(/•/g,'<br>•');
+  let photosHtml='';
+  if(d.photos.length>0){photosHtml='<h3 style="font-size:14px;font-weight:700;color:var(--g9);margin-top:24px">5. Fotografías de Carga</h3><div class="doc-photos">'+d.photos.map(u=>'<img src="'+u+'">').join('')+'</div>';}
+  return`<img src="${LOGO}" class="doc-logo"><h2 style="text-decoration:underline">Reporte de Carga e Inspección</h2>
+<table class="doc-table" style="border:none"><tr><td style="border:none" class="doc-row-label">Fecha:</td><td style="border:none">${t.inspDate}</td></tr><tr><td style="border:none" class="doc-row-label">Ubicación:</td><td style="border:none">${t.location}</td></tr><tr><td style="border:none" class="doc-row-label">Inspector Responsable:</td><td style="border:none">${t.inspector}</td></tr><tr><td style="border:none" class="doc-row-label">Referencia de Carga:</td><td style="border:none">${d.ref}</td></tr></table>
+<h3 style="font-size:14px;font-weight:700;color:var(--g9);margin-top:20px">1. Información General</h3>
+<table class="doc-table"><tr><td class="doc-row-label">Vendedor</td><td>3-102-734221 SRL</td></tr><tr><td class="doc-row-label">Cliente</td><td>${d.customer.name}</td></tr><tr><td class="doc-row-label">Contacto</td><td>${d.customer.contact||'-'}</td></tr><tr><td class="doc-row-label">Producto</td><td>Chayote Quelite-Verde</td></tr><tr><td class="doc-row-label">Lugar de carga</td><td>${t.location}</td></tr><tr><td class="doc-row-label">Fecha de inspección</td><td>${t.inspDate}</td></tr></table>
+<h3 style="font-size:14px;font-weight:700;color:var(--g9);margin-top:20px">2. Detalles de Carga</h3>
+<table class="doc-table"><tr><td class="doc-row-label">Tipo de Embalaje</td><td>${t.packaging}</td></tr><tr><td class="doc-row-label">Totalidad de Cajas</td><td>${fN(d.boxes)} cajas, cada uno con un peso de ${d.weight} kg de producto</td></tr><tr><td class="doc-row-label">Distribución</td><td>${d.pallets} pallets, ${d.boxesPerPallet} cajas cada una.</td></tr></table>
+<h3 style="font-size:14px;font-weight:700;color:var(--g9);margin-top:20px">3. Detalles de Transporte</h3>
+<table class="doc-table"><tr><td class="doc-row-label">Naviera</td><td>${t.naviera||'NA'}</td></tr><tr><td class="doc-row-label">Número de Contenedor</td><td>${t.container||'NA'}</td></tr><tr><td class="doc-row-label">Placa del Cabezal</td><td>${t.plate}</td></tr><tr><td class="doc-row-label">Nombre Chofer</td><td>${t.driver}</td></tr><tr><td class="doc-row-label">Teléfono Chofer</td><td>${t.driverPhone||'-'}</td></tr><tr><td class="doc-row-label">Termógrafo</td><td>${t.thermograph||'NA'}</td></tr><tr><td class="doc-row-label">Marchamo</td><td>${t.seal||'NA'}</td></tr><tr><td class="doc-row-label">Marchamo Cliente</td><td>${t.clientSeal||'NA'}</td></tr><tr><td class="doc-row-label">Temperatura a carga</td><td>${t.temp||'NA'}</td></tr></table>
+<h3 style="font-size:14px;font-weight:700;color:var(--g9);margin-top:20px">4. Inspección de Contenedor</h3>
+<div style="padding:12px 16px;background:var(--g0);border-radius:8px;margin-top:8px">${comments}</div>
+${photosHtml}
+<h3 style="font-size:14px;font-weight:700;color:var(--g9);margin-top:24px">6. Conclusiones</h3>
+<div style="font-size:13px;color:var(--n7);line-height:1.7;margin-top:8px">${conclusions}</div>
+<div style="margin-top:48px"><p style="font-size:13px;color:var(--n5)">Inspector:</p><div style="width:250px;border-top:1px solid var(--n9);margin-top:40px;padding-top:6px;font-size:12px;color:var(--n5)">${t.inspector}</div></div>
+<div class="doc-footer"><span>${t.location}</span><span class="doc-ref">${d.ref}</span></div>`;}
+
+function genGGN(d){const sc=d.ggn.status.includes('Certified')?'status-certified':'status-pending';let ss='';if(d.screenshot){ss='<div style="margin-top:24px"><h3 style="font-size:13px;font-weight:700;color:var(--g9);margin-bottom:8px">📸 GLOBALG.A.P. Verification Screenshot</h3><img src="'+d.screenshot+'" class="ggn-screenshot-doc"></div>';}
+return`<img src="${LOGO}" class="doc-logo"><h2>GGN CHECK — GLOBALG.A.P. Verification</h2><div class="doc-meta"><span>Semana: <strong>${d.week}</strong> | Referencia: <strong>${d.ref}</strong></span></div><table class="doc-table"><tr><th colspan="2">Información del Productor</th></tr><tr><td class="doc-row-label">GGN</td><td>${d.ggn.number}</td></tr><tr><td class="doc-row-label">Reg. No</td><td>${d.ggn.regNo}</td></tr><tr><td class="doc-row-label">Company Type</td><td>${d.ggn.companyType}</td></tr><tr><td class="doc-row-label">Nombre</td><td>${d.ggn.producer}</td></tr><tr><td class="doc-row-label">Certification Body</td><td>${d.ggn.certBody}</td></tr><tr><td class="doc-row-label">Scheme</td><td>GLOBALG.A.P.</td></tr></table><table class="doc-table"><tr><th colspan="2">Detalles de Certificación</th></tr><tr><td class="doc-row-label">Producto</td><td>Chayote</td></tr><tr><td class="doc-row-label">Certificate No.</td><td>${d.ggn.certNo}</td></tr><tr><td class="doc-row-label">Cycle</td><td>Current</td></tr><tr><td class="doc-row-label">Status</td><td><span class="doc-status-badge ${sc}">${d.ggn.status}</span></td></tr><tr><td class="doc-row-label">Valid To</td><td>${d.ggn.validTo}</td></tr><tr><td class="doc-row-label">Scheme GR</td><td>${d.ggn.scheme}</td></tr></table><table class="doc-table"><tr><th colspan="2">Atributos del Ciclo Actual</th></tr><tr><td class="doc-row-label">GRASP status</td><td>see GRASP v1.3.1-i</td></tr><tr><td class="doc-row-label">Product Handling</td><td>Facility</td></tr><tr><td class="doc-row-label">Harvest Included</td><td>Included</td></tr><tr><td class="doc-row-label">Audit Type</td><td>announced</td></tr><tr><td class="doc-row-label">Parallel Production (PP)?</td><td>No</td></tr><tr><td class="doc-row-label">Unannounced reward program</td><td>No, annual announced inspection</td></tr><tr><td class="doc-row-label">Parallel Ownership (PO)?</td><td>No</td></tr><tr><td class="doc-row-label">Audit Method</td><td>Onsite</td></tr></table>${ss}<div class="doc-footer"><span>Fuente: <a href="https://database.globalgap.org" target="_blank">database.globalgap.org</a></span><span>Verificado para semana ${d.week} — ${d.date}</span></div>`;}
 
 function generateAll(){
   const d=getFormData();
-  if(!d.ref||d.ref==='-'){alert('Please enter the week number first.');return;}
-  currentData=d;
-  document.getElementById('doc-po').innerHTML=generatePO(d);
-  document.getElementById('doc-pi').innerHTML=generatePI(d);
-  document.getElementById('doc-ggn').innerHTML=generateGGN(d);
-  document.getElementById('po-filename').textContent='📄 '+d.filenames.po+'.pdf';
-  document.getElementById('pi-filename').textContent='📄 '+d.filenames.pi+'.pdf';
-  document.getElementById('ggn-filename').textContent='📄 '+d.filenames.ggn+'.pdf';
-  const banner=document.getElementById('fileListBanner');banner.style.display='block';
-  document.getElementById('fileListContent').innerHTML='📄 '+d.filenames.po+'.pdf<br>📄 '+d.filenames.pi+'.pdf<br>📄 '+d.filenames.ggn+'.pdf';
+  if(!d.ref||d.ref==='-'){alert('Ingresa el número de semana primero.');return;}
+  if(!document.getElementById('rcConclusions').value.trim())regenerateConclusion();
+  currentData=getFormData(); // re-get after conclusion generation
+  document.getElementById('doc-po').innerHTML=genPO(currentData);
+  document.getElementById('doc-pi').innerHTML=genPI(currentData);
+  document.getElementById('doc-rc').innerHTML=genRC(currentData);
+  document.getElementById('doc-ggn').innerHTML=genGGN(currentData);
+  ['po','pi','rc','ggn'].forEach(t=>{document.getElementById(t+'-filename').textContent='📄 '+currentData.filenames[t]+'.pdf';});
+  const b=document.getElementById('fileListBanner');b.style.display='block';
+  document.getElementById('fileListContent').innerHTML=['po','pi','rc','ggn'].map(t=>'📄 '+currentData.filenames[t]+'.pdf').join('<br>');
   switchTab('po');
 }
 
-// ── PDF via Print (full color, proper naming) ──
 function downloadPDF(type){
-  if(!currentData){alert('Generate documents first.');return;}
-  // Set document title to desired filename (browser uses this as default PDF name)
+  if(!currentData){alert('Genera los documentos primero.');return;}
   document.title=currentData.filenames[type];
-  // Mark only this panel for printing
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('print-target'));
   document.getElementById('panel-'+type).classList.add('print-target');
-  // Show tip
-  document.getElementById('tip-'+type).classList.add('show');
-  // Trigger print dialog
   window.print();
-  // Restore title after print
   setTimeout(()=>{document.title='Nietos Fresh — Document Generator';},2000);
 }
 
-function printDoc(type){downloadPDF(type);}
-
 function clearForm(){
-  if(!confirm('Clear weekly fields? Defaults will remain.'))return;
-  ['weekNum','orderDateRaw','vessel','containerNum','shippingLine','seal'].forEach(id=>document.getElementById(id).value='');
+  if(!confirm('¿Limpiar campos semanales?'))return;
+  ['weekNum','orderDateRaw','inspDateRaw','vessel','containerNum','shippingLine','seal'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('fileListBanner').style.display='none';
   document.getElementById('dateFormatted').textContent='';
-  screenshotDataUrl=null;
-  const zone=document.getElementById('screenshotZone');
-  zone.classList.remove('has-image');
-  zone.innerHTML='<p>📸 Click to upload screenshot or drag & drop</p><p class="hint">Take a screenshot from the GLOBALG.A.P. database after clicking "Verify"</p>';
+  document.getElementById('inspDateFormatted').textContent='';
+  document.getElementById('rcConclusions').value='';
+  screenshotDataUrl=null;photoDataUrls=[];
+  document.getElementById('screenshotZone').innerHTML='<p>📸 Click para subir screenshot o drag & drop</p>';
+  document.getElementById('screenshotZone').classList.remove('has-image');
+  document.getElementById('photoThumbs').innerHTML='';
   computeFields();
 }
 computeFields();
